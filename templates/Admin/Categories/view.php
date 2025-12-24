@@ -60,6 +60,12 @@ $config = array_merge($global_config, $local_config);
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><?= __('Related tables') ?></a>
 											<ul class="dropdown-menu">
+<?php if (!empty($category->ads)) : ?>
+												<li><?= $this->Html->link(__('Ads') . '...', ['controller' => 'Ads', 'action' => 'index', 'parent', 'category', $category->id], ['class' => 'dropdown-item']) ?></li>
+<?php endif ?>
+<?php if (!empty($category->category_stats)) : ?>
+												<li><?= $this->Html->link(__('Category Stats') . '...', ['controller' => 'Category Stats', 'action' => 'index', 'parent', 'category', $category->id], ['class' => 'dropdown-item']) ?></li>
+<?php endif ?>
 <?php if (!empty($category->companies)) : ?>
 												<li><?= $this->Html->link(__('Companies') . '...', ['controller' => 'Companies', 'action' => 'index', 'parent', 'category', $category->id], ['class' => 'dropdown-item']) ?></li>
 <?php endif ?>
@@ -123,6 +129,12 @@ $config = array_merge($global_config, $local_config);
 												<div class="col-sm-10 p-1">
 													<?= h($category->action) ?>
 
+												</div>
+											</div>
+											<div class="row"><!-- 3. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Visible') ?>:</label>
+												<div class="col-sm-10 p-1">
+													<?= $this->Number->format($category->visible) ?><!-- 3.b -->
 												</div>
 											</div>
 <?php /*
@@ -235,6 +247,22 @@ $config = array_merge($global_config, $local_config);
 									<nav>
 										<div class="nav nav-tabs mt-1" id="nav-tab" role="tablist">
 <?php $acticeClass = " active"; ?>
+<?php if (!empty($category->ads)): ?>
+
+											<button class="nav-link<?= $acticeClass ?>" id="nav-ads-tab" data-bs-toggle="tab" data-bs-target="#nav-ads" type="button" role="tab" aria-controls="nav-ads" aria-selected="true">
+												<?= __('Ads') ?>
+											</button>
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
+<?php $acticeClass = " active"; ?>
+<?php if (!empty($category->category_stats)): ?>
+
+											<button class="nav-link<?= $acticeClass ?>" id="nav-category_stats-tab" data-bs-toggle="tab" data-bs-target="#nav-category_stats" type="button" role="tab" aria-controls="nav-category_stats" aria-selected="true">
+												<?= __('Category Stats') ?>
+											</button>
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
+<?php $acticeClass = " active"; ?>
 <?php if (!empty($category->companies)): ?>
 
 											<button class="nav-link<?= $acticeClass ?>" id="nav-companies-tab" data-bs-toggle="tab" data-bs-target="#nav-companies" type="button" role="tab" aria-controls="nav-companies" aria-selected="true">
@@ -253,6 +281,166 @@ $config = array_merge($global_config, $local_config);
 								<div class="tab-content" id="nav-tabContent">
 
 <?php $acticeClass = " show active"; ?>
+<?php if (!empty($category->ads)): ?>
+
+									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-ads" role="tabpanel" aria-labelledby="nav-ads-tab" tabindex="0">
+
+										<table class="table table-responsive-xl table-hover table-striped" style="">
+											<thead class="thead-info">
+												<tr>
+<?php if($config['index_show_id']){ ?>
+													<th class="number id"><?= __('Id') ?></th>
+<?php } ?>
+													<th class="please-change-type category-id"><?= __('Category Id') ?></th>
+													<th class="please-change-type icon-id"><?= __('Icon Id') ?></th>
+													<th class="string name"><?= __('Name') ?></th>
+													<th class="please-change-type description"><?= __('Description') ?></th>
+													<th class="please-change-type price"><?= __('Price') ?></th>
+													<th class="please-change-type user-id"><?= __('User Id') ?></th>
+													<th class="please-change-type status"><?= __('Status') ?></th>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number views-count"><?= __('Views Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number unique-views-count"><?= __('Unique Views Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number favorite-count"><?= __('Favorite Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number contact-clicks-count"><?= __('Contact Clicks Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number clicks-count"><?= __('Clicks Count') ?></th>
+<?php } ?>
+													<th class="please-change-type match-score"><?= __('Match Score') ?></th>
+													<th class="please-change-type activity-score"><?= __('Activity Score') ?></th>
+													<th class="please-change-type score-popularity"><?= __('Score Popularity') ?></th>
+													<th class="please-change-type last-boost"><?= __('Last Boost') ?></th>
+													<th class="please-change-type is-featured"><?= __('Is Featured') ?></th>
+													<th class="please-change-type featured-until"><?= __('Featured Until') ?></th>
+													<th class="please-change-type priority-level"><?= __('Priority Level') ?></th>
+													<th class="please-change-type admin-score-adjustment"><?= __('Admin Score Adjustment') ?></th>
+													<th class="please-change-type is-banned"><?= __('Is Banned') ?></th>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number reported-count"><?= __('Reported Count') ?></th>
+<?php } ?>
+													<th class="please-change-type created-at"><?= __('Created At') ?></th>
+													<th class="please-change-type updated-at"><?= __('Updated At') ?></th>
+													<th class="actions"><?= __('Actions') ?></th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($category->ads as $ads) : ?>
+
+												<tr>
+<?php if($config['index_show_id']){ ?>
+													<td class="number id" value="<?= $ads->id ?>"><?= h($ads->id) ?></td>
+<?php } ?>
+													<td class="please-change-type category-id" value="<?= $ads->category_id ?>"><?= h($ads->category_id) ?></td>
+													<td class="please-change-type icon-id" value="<?= $ads->icon_id ?>"><?= h($ads->icon_id) ?></td>
+													<td class="string name" value="<?= $ads->name ?>"><?= h($ads->name) ?></td>
+													<td class="please-change-type description" value="<?= $ads->description ?>"><?= h($ads->description) ?></td>
+													<td class="please-change-type price" value="<?= $ads->price ?>"><?= h($ads->price) ?></td>
+													<td class="please-change-type user-id" value="<?= $ads->user_id ?>"><?= h($ads->user_id) ?></td>
+													<td class="please-change-type status" value="<?= $ads->status ?>"><?= h($ads->status) ?></td>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number views-count" value="<?= $ads->views_count ?>"><?= h($ads->views_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number unique-views-count" value="<?= $ads->unique_views_count ?>"><?= h($ads->unique_views_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number favorite-count" value="<?= $ads->favorite_count ?>"><?= h($ads->favorite_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number contact-clicks-count" value="<?= $ads->contact_clicks_count ?>"><?= h($ads->contact_clicks_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number clicks-count" value="<?= $ads->clicks_count ?>"><?= h($ads->clicks_count) ?></td>
+<?php } ?>
+													<td class="please-change-type match-score" value="<?= $ads->match_score ?>"><?= h($ads->match_score) ?></td>
+													<td class="please-change-type activity-score" value="<?= $ads->activity_score ?>"><?= h($ads->activity_score) ?></td>
+													<td class="please-change-type score-popularity" value="<?= $ads->score_popularity ?>"><?= h($ads->score_popularity) ?></td>
+													<td class="please-change-type last-boost" value="<?= $ads->last_boost ?>"><?= h($ads->last_boost) ?></td>
+													<td class="please-change-type is-featured" value="<?= $ads->is_featured ?>"><?= h($ads->is_featured) ?></td>
+													<td class="please-change-type featured-until" value="<?= $ads->featured_until ?>"><?= h($ads->featured_until) ?></td>
+													<td class="please-change-type priority-level" value="<?= $ads->priority_level ?>"><?= h($ads->priority_level) ?></td>
+													<td class="please-change-type admin-score-adjustment" value="<?= $ads->admin_score_adjustment ?>"><?= h($ads->admin_score_adjustment) ?></td>
+													<td class="please-change-type is-banned" value="<?= $ads->is_banned ?>"><?= h($ads->is_banned) ?></td>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number reported-count" value="<?= $ads->reported_count ?>"><?= h($ads->reported_count) ?></td>
+<?php } ?>
+													<td class="please-change-type created-at" value="<?= $ads->created_at ?>"><?= h($ads->created_at) ?></td>
+													<td class="please-change-type updated-at" value="<?= $ads->updated_at ?>"><?= h($ads->updated_at) ?></td>
+													<td class="actions">
+														<?= $this->Html->link('<i class="fa fa-eye"></i>', ['controller' => 'Ads', 'action' => 'view', $ads->id], ["escape" => false, "role" => "button",  "class" => "btn btn-warning btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?><!-- view button -->
+														<?= $this->Html->link('<i class="fa fa-edit"></i>', ['controller' => 'Ads', 'action' => 'edit', $ads->id], ["escape" => false, "role" => "button", "class" => "btn btn-primary btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('Edit this item'), "data-original-title" => ""]) ?><!-- edit button -->
+														<?= $this->Form->postLink('<i class="fa fa-times"></i>', ['controller' => 'Ads', 'action' => 'delete', $ads->id], ["escape" => false, "role" => "button", "class" => "btn btn-danger btn-sm", "data-toggle" =>"tooltip", "data-placement" => "top", "title" => __('Delete this item'), "data-original-title" => "", "confirm" => __("Are you sure you want to delete # {0}?", $ads->id)]) ?><!-- delete button -->
+													</td>
+												</tr>
+												<?php endforeach ?>
+
+											</tbody>
+										</table>
+
+									</div><!-- /tab pane -->
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
+<?php $acticeClass = " show active"; ?>
+<?php if (!empty($category->category_stats)): ?>
+
+									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-category_stats" role="tabpanel" aria-labelledby="nav-category_stats-tab" tabindex="0">
+
+										<table class="table table-responsive-xl table-hover table-striped" style="">
+											<thead class="thead-info">
+												<tr>
+													<th class="please-change-type category-id"><?= __('Category Id') ?></th>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number views-count"><?= __('Views Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number search-count"><?= __('Search Count') ?></th>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<th class="number ad-count"><?= __('Ad Count') ?></th>
+<?php } ?>
+													<th class="please-change-type popularity-score"><?= __('Popularity Score') ?></th>
+													<th class="please-change-type updated-at"><?= __('Updated At') ?></th>
+													<th class="actions"><?= __('Actions') ?></th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($category->category_stats as $categoryStats) : ?>
+
+												<tr>
+													<td class="please-change-type category-id" value="<?= $categoryStats->category_id ?>"><?= h($categoryStats->category_id) ?></td>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number views-count" value="<?= $categoryStats->views_count ?>"><?= h($categoryStats->views_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number search-count" value="<?= $categoryStats->search_count ?>"><?= h($categoryStats->search_count) ?></td>
+<?php } ?>
+<?php if($config['index_show_counters']){ ?>
+													<td class="number ad-count" value="<?= $categoryStats->ad_count ?>"><?= h($categoryStats->ad_count) ?></td>
+<?php } ?>
+													<td class="please-change-type popularity-score" value="<?= $categoryStats->popularity_score ?>"><?= h($categoryStats->popularity_score) ?></td>
+													<td class="please-change-type updated-at" value="<?= $categoryStats->updated_at ?>"><?= h($categoryStats->updated_at) ?></td>
+													<td class="actions">
+														<?= $this->Html->link('<i class="fa fa-eye"></i>', ['controller' => 'CategoryStats', 'action' => 'view', $categoryStats->category_id], ["escape" => false, "role" => "button",  "class" => "btn btn-warning btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('View this item'), "data-original-title" => ""]) ?><!-- view button -->
+														<?= $this->Html->link('<i class="fa fa-edit"></i>', ['controller' => 'CategoryStats', 'action' => 'edit', $categoryStats->category_id], ["escape" => false, "role" => "button", "class" => "btn btn-primary btn-sm", "data-toggle" => "tooltip", "data-placement" => "top", "title" => __('Edit this item'), "data-original-title" => ""]) ?><!-- edit button -->
+														<?= $this->Form->postLink('<i class="fa fa-times"></i>', ['controller' => 'CategoryStats', 'action' => 'delete', $categoryStats->category_id], ["escape" => false, "role" => "button", "class" => "btn btn-danger btn-sm", "data-toggle" =>"tooltip", "data-placement" => "top", "title" => __('Delete this item'), "data-original-title" => "", "confirm" => __("Are you sure you want to delete # {0}?", $categoryStats->category_id)]) ?><!-- delete button -->
+													</td>
+												</tr>
+												<?php endforeach ?>
+
+											</tbody>
+										</table>
+
+									</div><!-- /tab pane -->
+<?php 	$acticeClass = ""; ?>
+<?php endif ?>
+<?php $acticeClass = " show active"; ?>
 <?php if (!empty($category->companies)): ?>
 
 									<div class="tab-pane fade<?= $acticeClass ?> p-0" id="nav-companies" role="tabpanel" aria-labelledby="nav-companies-tab" tabindex="0">
@@ -265,19 +453,22 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 													<th class="please-change-type icon-id"><?= __('Icon Id') ?></th>
 													<th class="please-change-type category-id"><?= __('Category Id') ?></th>
+													<th class="please-change-type logo"><?= __('Logo') ?></th>
 													<th class="string name"><?= __('Name') ?></th>
+													<th class="please-change-type banner"><?= __('Banner') ?></th>
 													<th class="please-change-type name-slug"><?= __('Name Slug') ?></th>
-													<th class="please-change-type description"><?= __('Description') ?></th>
-													<th class="please-change-type description-slug"><?= __('Description Slug') ?></th>
 													<th class="please-change-type keywords"><?= __('Keywords') ?></th>
 													<th class="please-change-type keywords-slug"><?= __('Keywords Slug') ?></th>
+													<th class="please-change-type city-id"><?= __('City Id') ?></th>
+													<th class="please-change-type address"><?= __('Address') ?></th>
+													<th class="please-change-type house-number"><?= __('House Number') ?></th>
+													<th class="please-change-type description"><?= __('Description') ?></th>
+													<th class="please-change-type description-slug"><?= __('Description Slug') ?></th>
 													<th class="please-change-type longitude"><?= __('Longitude') ?></th>
 													<th class="please-change-type latitude"><?= __('Latitude') ?></th>
 													<th class="please-change-type maximum-distance"><?= __('Maximum Distance') ?></th>
 													<th class="please-change-type date-from"><?= __('Date From') ?></th>
 													<th class="please-change-type date-to"><?= __('Date To') ?></th>
-													<th class="please-change-type logo"><?= __('Logo') ?></th>
-													<th class="please-change-type banner"><?= __('Banner') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -306,19 +497,22 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 													<td class="please-change-type icon-id" value="<?= $companies->icon_id ?>"><?= h($companies->icon_id) ?></td>
 													<td class="please-change-type category-id" value="<?= $companies->category_id ?>"><?= h($companies->category_id) ?></td>
+													<td class="please-change-type logo" value="<?= $companies->logo ?>"><?= h($companies->logo) ?></td>
 													<td class="string name" value="<?= $companies->name ?>"><?= h($companies->name) ?></td>
+													<td class="please-change-type banner" value="<?= $companies->banner ?>"><?= h($companies->banner) ?></td>
 													<td class="please-change-type name-slug" value="<?= $companies->name_slug ?>"><?= h($companies->name_slug) ?></td>
-													<td class="please-change-type description" value="<?= $companies->description ?>"><?= h($companies->description) ?></td>
-													<td class="please-change-type description-slug" value="<?= $companies->description_slug ?>"><?= h($companies->description_slug) ?></td>
 													<td class="please-change-type keywords" value="<?= $companies->keywords ?>"><?= h($companies->keywords) ?></td>
 													<td class="please-change-type keywords-slug" value="<?= $companies->keywords_slug ?>"><?= h($companies->keywords_slug) ?></td>
+													<td class="please-change-type city-id" value="<?= $companies->city_id ?>"><?= h($companies->city_id) ?></td>
+													<td class="please-change-type address" value="<?= $companies->address ?>"><?= h($companies->address) ?></td>
+													<td class="please-change-type house-number" value="<?= $companies->house_number ?>"><?= h($companies->house_number) ?></td>
+													<td class="please-change-type description" value="<?= $companies->description ?>"><?= h($companies->description) ?></td>
+													<td class="please-change-type description-slug" value="<?= $companies->description_slug ?>"><?= h($companies->description_slug) ?></td>
 													<td class="please-change-type longitude" value="<?= $companies->longitude ?>"><?= h($companies->longitude) ?></td>
 													<td class="please-change-type latitude" value="<?= $companies->latitude ?>"><?= h($companies->latitude) ?></td>
 													<td class="please-change-type maximum-distance" value="<?= $companies->maximum_distance ?>"><?= h($companies->maximum_distance) ?></td>
 													<td class="please-change-type date-from" value="<?= $companies->date_from ?>"><?= h($companies->date_from) ?></td>
 													<td class="please-change-type date-to" value="<?= $companies->date_to ?>"><?= h($companies->date_to) ?></td>
-													<td class="please-change-type logo" value="<?= $companies->logo ?>"><?= h($companies->logo) ?></td>
-													<td class="please-change-type banner" value="<?= $companies->banner ?>"><?= h($companies->banner) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $companies->visible ?>"><?= h($companies->visible) ?></td>
 <?php } ?>

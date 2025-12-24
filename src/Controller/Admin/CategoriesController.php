@@ -7,6 +7,8 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Utility\Text;
+
 
 
 /**
@@ -223,12 +225,11 @@ class CategoriesController extends AppController
 			$data = $this->request->getData();
 			//debug($data);
             $category = $this->Categories->patchEntity($category, $data);
-
-			$category->action = 'add';
 			
-			$category->name_slug = 'Alma 01';
-			$category->keywords_slug = 'Alma 02';
-			$category->description_slug = 'Alma 03';
+			$category->name_slug = Text::slug($category->name, ' ');
+			$category->keywords_slug = Text::slug($category->keywords, ' ');
+			$category->description_slug = Text::slug($category->description, ' ');
+			$category->action = 'add';
 
 			//dd($category);
 			/*
@@ -284,12 +285,11 @@ class CategoriesController extends AppController
 			$data = $this->request->getData();
 			//debug($data);
 			$category = $this->Categories->patchEntity($category, $data);
-			
+			$category->name_slug = Text::slug($category->name, ' ');
+			$category->keywords_slug = Text::slug($category->keywords, ' ');
+			$category->description_slug = Text::slug($category->description, ' ');
 			$category->action = 'upd';
 			
-			$category->name_slug = 'Alma 1';
-			$category->keywords_slug = 'Alma 2';
-			$category->description_slug = 'Alma 3';
 			
 			//dd($category);
 			/*

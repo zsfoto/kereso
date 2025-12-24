@@ -42,11 +42,29 @@ class V1Controller extends AppController
 		//}
 
 		// 2. Lekérdezés indítása a modellen
-		$categories = $this->Categories->find();
+		$categories = $this->Categories->find()->contain(['Icons', 'Companies' => ['Persons']]);
 
 		// 3. Feltétel hozzáadása, ha van keresési kifejezés
 		if (!empty($searchTerm)) {
-			$categories->where(['name_slug LIKE' => '%' . $searchTerm . '%']);
+			$categories->where([
+                'OR' => [
+                    ['Categories.name LIKE' => '%' . $searchTerm . '%'],
+                    ['Categories.name_slug LIKE' => '%' . $searchTerm . '%'],
+                    ['Categories.keywords LIKE' => '%' . $searchTerm . '%'],
+                    ['Categories.keywords_slug LIKE' => '%' . $searchTerm . '%'],
+
+                    //['Companies.name LIKE' => '%' . $searchTerm . '%'],
+                    //['Companies.name_slug LIKE' => '%' . $searchTerm . '%'],
+                    //['Companies.keywords LIKE' => '%' . $searchTerm . '%'],
+                    //['Companies.keywords_slug LIKE' => '%' . $searchTerm . '%'],
+
+                    //['Persons.name LIKE' => '%' . $searchTerm . '%'],
+                    //['Persons.name_slug LIKE' => '%' . $searchTerm . '%'],
+                    //['Persons.keywords LIKE' => '%' . $searchTerm . '%'],
+                    //['Persons.keywords_slug LIKE' => '%' . $searchTerm . '%'],
+
+                ]
+            ]);
 		}
 
 		$categories->all();
@@ -60,7 +78,6 @@ class V1Controller extends AppController
 			'data' => $categories,
 		]);
 		$this->viewBuilder()->setOption('serialize', ['success', 'count', 'data']);
-		
 		
 		/*
         $categories = $this->Categories->find('all')->all();

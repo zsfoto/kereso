@@ -68,7 +68,7 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 										
 										<div class="tab-pane fade show active" id="tabPanelMain" role="tabpanel" aria-labelledby="tabMain" tabindex="0">
 
-											<!-- 1. SELECT: icon_id: string  -->
+											<!-- 1. SELECT: icon_id: integer  -->
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="icon-id"><?= __('Icon Id') ?>:</label>
 												<div class="col-md-4">
@@ -86,17 +86,6 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 												</div>
 											</div>
 
-<?php /*
-											<!-- 2. STRING: name_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="name-slug"><?= __('Name Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('name_slug', ['label' => __('Name Slug'), 'placeholder' => __('Name Slug'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-*/ ?>
-
 											<!-- 2. STRING: keywords: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywords"><?= __('Keywords') ?>:</label>
@@ -105,17 +94,6 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 
 												</div>
 											</div>
-
-<?php /*
-											<!-- 2. STRING: keywords_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywords-slug"><?= __('Keywords Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('keywords_slug', ['label' => __('Keywords Slug'), 'placeholder' => __('Keywords Slug'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-*/ ?>
 
 											<!-- 7. BOOLEAN: visible: boolean  required -->
 											<div class="mb-3 form-group row checkbox">
@@ -135,17 +113,6 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 												</div>
 											</div>
 
-<?php /*
-											<!-- 2. STRING: action: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="action"><?= __('Action') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('action', ['label' => __('Action'), 'placeholder' => __('Action'), 'class' => 'form-control', 'empty' => false]); ?>
-
-												</div>
-											</div>
-*/ ?>
-
 										</div><!-- /.tabPanelMain -->
 										
 										
@@ -160,6 +127,7 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 											</div>
 										</div><!-- /.TabPanel: tabPanelDescription -->
 
+<?php /*
 										<!-- TabPanel: tabPanelDescriptionSlug -->
 										<!-- 10. TEXT: description_slug: text  required -->
 										<div class="tab-pane fade" id="tabPanelDescriptionSlug" role="tabpanel" aria-labelledby="tabDescriptionSlug" tabindex="0">
@@ -171,7 +139,6 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 											</div>
 										</div><!-- /.TabPanel: tabPanelDescriptionSlug -->
 
-<?php /*											
 										<div class="tab-pane fade" id="tabPanelMore" role="tabpanel" aria-labelledby="tabMore" tabindex="0">
 											<h3>More content come here...</h3>
 
@@ -207,7 +174,7 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/css/tempus-dominus.min",
 			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/css/bootstrap-select.min",
-			"jeffAdmin5./assets/plugins/icheck-1.0.3/skins/all",
+			//"jeffAdmin5./assets/plugins/icheck-1.0.3/skins/all",
 
 			// "jeffAdmin5./assets/plugins/select2-4.1.0-rc.0/dist/css/select2.min",	// If you want to use Select 2, but it's not finish!!!
 			// "jeffAdmin5./assets/css/select2-bootstrap-5-theme.min",					// If you want to use Select 2, but it's not finish!!!
@@ -225,7 +192,7 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 			//'jeffAdmin5./assets/plugins/jReadMore-master/dist/read-more.min',
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/bootstrap-select.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/i18n/defaults-hu_HU.min",
-			"jeffAdmin5./assets/plugins/icheck-1.0.3/icheck.min",
+			//"jeffAdmin5./assets/plugins/icheck-1.0.3/icheck.min",
 			
 			//"jeffAdmin5./assets/plugins/jquery-copy-to-clipboard-master/jquery.copy-to-clipboard",
 			
@@ -245,7 +212,7 @@ $this->assign('title', __('Add') . ' ' . __('Category'));
 	jeffAdminInitInputSpinner()
 	jeffAdminInitSummerNote('description', 400, '<?= __("Here you can write the note") ?>...') // Init SummerNote for description.
 	jeffAdminInitSummerNote('description-slug', 400, '<?= __("Here you can write the note") ?>...') // Init SummerNote for description_slug.
-	jeffAdminInitICheck('icheckbox_flat-blue');
+	//jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){
 		$('#button-submit').click( function(){

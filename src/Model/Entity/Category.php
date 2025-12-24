@@ -28,6 +28,8 @@ use Cake\Http\Exception\NotFoundException;
  * @property \Cake\I18n\DateTime $modified
  *
  * @property \App\Model\Entity\Icon $icon
+ * @property \App\Model\Entity\Ad[] $ads
+ * @property \App\Model\Entity\CategoryStat[] $category_stats
  * @property \App\Model\Entity\Company[] $companies
  */
 class Category extends Entity
@@ -56,6 +58,8 @@ class Category extends Entity
         'created' => true,
         'modified' => true,
         'icon' => true,
+        'ads' => true,
+        'category_stats' => true,
         'companies' => true,
     ];
 }

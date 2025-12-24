@@ -15,6 +15,7 @@ $local_config = [
 	'show_id' 			=> true,
 	'show_pos' 			=> false,
 	'show_counters'		=> false,
+	'show_visible'		=> true,
 	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
@@ -59,12 +60,9 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
-											<th class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
+											<th colspan="2" class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
-											<th class="string name-slug"><?= $this->Paginator->sort('name_slug') ?></th><!-- H.1. -->
 											<th class="string keywords"><?= $this->Paginator->sort('keywords') ?></th><!-- H.1. -->
-											<th class="string keywords-slug"><?= $this->Paginator->sort('keywords_slug') ?></th><!-- H.1. -->
-											<th class="string action"><?= $this->Paginator->sort('action') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -106,12 +104,12 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $category->id ?>"><?= h($category->id) ?><a name="<?= $category->id ?>"></a></td>
 <?php } ?>
-											<td class="string link icon-id" value="<?= $category->icon_id ?>"><?= $category->hasValue('icon') ? $this->Html->link($category->icon->name, ['controller' => 'Icons', 'action' => 'view', $category->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+											<?php // if($category->hasValue('icon')){ ?>
+												<td class="string link icon-id text-center" value="<?= $category->icon_id ?>"><?= $this->Html->link($this->Html->image('/img/icons/' . $category->icon->filename, ['class' => 'img-fluid', 'style' => 'width: 30px; height: 30px;']), ['controller' => 'Icons', 'action' => 'view', $category->icon->id], ['escape' => false]) ?></td>
+												<td class="string link icon-id" value="<?= $category->icon_id ?>"><?= $this->Html->link($category->icon->name, ['controller' => 'Icons', 'action' => 'view', $category->icon->id]) ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+											<?php // } ?>
 											<td class="string name" value="<?= $category->name ?>"><?= h($category->name) ?></td>
-											<td class="string name-slug" value="<?= $category->name_slug ?>"><?= h($category->name_slug) ?></td>
 											<td class="string keywords" value="<?= $category->keywords ?>"><?= h($category->keywords) ?></td>
-											<td class="string keywords-slug" value="<?= $category->keywords_slug ?>"><?= h($category->keywords_slug) ?></td>
-											<td class="string action" value="<?= $category->action ?>"><?= h($category->action) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $category->pos ?>"><?= h($category->pos) ?></td>
 <?php } ?>
