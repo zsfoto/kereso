@@ -81,21 +81,19 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="logo"><?= __('Logo') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->file('file_logo', ['type' => 'file', 'placeholder' => __('Logo'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('file_logo', ['type' => 'file', 'placeholder' => __('Logo'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
 
-<?php /*
 											<!-- 2. STRING: banner: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="banner"><?= __('Banner') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->file('file_banner', ['type' => 'file', 'placeholder' => __('Banner'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('file_banner', ['type' => 'file', 'placeholder' => __('Banner'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
-*/ ?>
 
 											<!-- 2. STRING: name: string  required -->
 											<div class="mb-3 form-group row text required">

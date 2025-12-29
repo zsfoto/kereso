@@ -206,17 +206,24 @@ class CompaniesTable extends Table
             ->notEmptyString('person_count');
 
         $validator
-            ->allowEmptyFile('file_logo')            
-            // Kiterjesztés ellenőrzése
-            ->add('file_logo', 'extension', [
-                'rule' => ['extension', ['png', 'jpg', 'jpeg']], // Csak ezeket engedi
-                'message' => 'Csak png, jpg vagy jpeg fájl tölthető fel.',
-            ])            
+            ->allowEmptyFile('file_logo')
+            ->add('file_logo', 'fileUpload', [
+                'errorField' => '0',
+                'rule' => ['uploadedFile', ['optional' => true]], // Ellenőrzi, hogy sikeres volt-e a feltöltés (ha nem üres)
+                'message' => 'Hiba történt a fájl feltöltésekor (lehet, hogy túl nagy a fájl vagy nem megfelelő a formátuma).',
+            ])
             // MIME típus ellenőrzése (biztonságosabb)
             ->add('file_logo', 'mimeType', [
-                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                'errorField' => '0',
+                'rule' => ['mimeType', ['image/jpg', 'image/jpeg', 'image/png']],
                 'message' => 'Érvénytelen fájltípus.',
-            ]);
+            ])
+            // Kiterjesztés ellenőrzése
+            ->add('file_logo', 'extension', [
+                'errorField' => '0',
+                'rule' => ['extension', ['png', 'jpg', 'jpeg']], // Csak ezeket engedi
+                'message' => 'Csak png, jpg vagy jpeg fájl tölthető fel.',
+            ])            ;
 
 
         return $validator;

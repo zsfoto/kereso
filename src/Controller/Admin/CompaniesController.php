@@ -232,12 +232,12 @@ class CompaniesController extends AppController
 
 			// 1. A fájl objektum lekérése
 			$logo = $this->request->getData('logo');
-			dd($logo);
+			//dd($logo);
 
 			$company->action = 'add';
-			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
+			//$company->name_slug = Text::slug(strtolower($company->name), ' ');
+			//$company->description_slug = Text::slug(strtolower($company->name), ' ');
+			//$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
 				
 			//dd($company);
 			/*
@@ -309,6 +309,9 @@ class CompaniesController extends AppController
 			*/
 
 			$file_logo = $this->request->getData('file_logo');
+			$file_banner = $this->request->getData('file_banner');
+			//debug($file_logo);
+			//dd($file_banner);
 
 			if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
 				$ext_logo = pathinfo($file_logo->getClientFilename(), PATHINFO_EXTENSION);
@@ -321,6 +324,7 @@ class CompaniesController extends AppController
 			}
 
 			//dd($company->getErrors());
+			$company->setErrors($company->getErrors());
 			if (!$company->hasErrors() && $this->Companies->save($company)) {
 				// Ellenőrzés: történt-e feltöltés és nincs-e hiba
 				if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
