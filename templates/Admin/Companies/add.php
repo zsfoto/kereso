@@ -65,17 +65,14 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<!-- 1. SELECT: icon_id: string  -->
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="icon-id"><?= __('Icon Id') ?>:</label>
-												<div class="col-md-4">
-													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]);	?>
+												<div class="col-md-3">
+													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]);	?>
 
 												</div>
-											</div>
 
-											<!-- 1. SELECT: category_id: integer  required -->
-											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="category-id"><?= __('Category Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('category_id', ['options' => $categories, 'placeholder' => __('Category Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('category_id', ['options' => $categories, 'placeholder' => __('Category Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -84,7 +81,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="logo"><?= __('Logo') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('logo', ['label' => __('Logo'), 'placeholder' => __('Logo'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('logo', ['type' => 'file', 'placeholder' => __('Logo'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -93,7 +90,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="banner"><?= __('Banner') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('banner', ['label' => __('Banner'), 'placeholder' => __('Banner'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('banner', ['type' => 'file', 'placeholder' => __('Banner'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -102,34 +99,25 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
+													<?= $this->Form->control('name', ['placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
 
 												</div>
 											</div>
 
-											<!-- 2. STRING: name_slug: string  required -->
+											<!-- 2. STRING: description: string  -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name-slug"><?= __('Name Slug') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="description"><?= __('Description') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name_slug', ['label' => __('Name Slug'), 'placeholder' => __('Name Slug'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('description', ['placeholder' => __('Description'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
 											<!-- 2. STRING: keywords: string  -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywords"><?= __('Keywords') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="keywords"><?= __('Keywords') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('keywords', ['label' => __('Keywords'), 'placeholder' => __('Keywords'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: keywords_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywords-slug"><?= __('Keywords Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('keywords_slug', ['label' => __('Keywords Slug'), 'placeholder' => __('Keywords Slug'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('keywords', ['placeholder' => __('Keywords'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -138,7 +126,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="city-id"><?= __('City Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('city_id', ['options' => $cities, 'placeholder' => __('City Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('city_id', ['options' => $cities, 'placeholder' => __('City Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '10', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -147,7 +135,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('Address') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('address', ['label' => __('Address'), 'placeholder' => __('Address'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('address', ['placeholder' => __('Address'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -155,44 +143,66 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<!-- 2. STRING: house_number: string  required -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="house-number"><?= __('House Number') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('house_number', ['label' => __('House Number'), 'placeholder' => __('House Number'), 'class' => 'form-control', 'empty' => false]); ?>
+												<div class="col-md-3">
+													<?= $this->Form->control('house_number', ['placeholder' => __('House Number'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 2. STRING: description: string  -->
+											<!-- 2. STRING: address: string  required -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description"><?= __('Description') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('description', ['label' => __('Description'), 'placeholder' => __('Description'), 'class' => 'form-control', 'empty' => true]); ?>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('Phone') ?>:</label>
+												<div class="col-md-3">
+													<?= $this->Form->control('phone', ['placeholder' => __('+36201234567'), 'class' => 'form-control', 'empty' => false]); ?>
+
+												</div>
+
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('Phone 2') ?>:</label>
+												<div class="col-md-3">
+													<?= $this->Form->control('phone2', ['placeholder' => __('+36201234567'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 2. STRING: description_slug: string  -->
+											<!-- 2. STRING: address: string  required -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description-slug"><?= __('Description Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('description_slug', ['label' => __('Description Slug'), 'placeholder' => __('Description Slug'), 'class' => 'form-control', 'empty' => true]); ?>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('Web') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-5">
+													<?= $this->Form->control('web', ['placeholder' => __('Web'), 'class' => 'form-control', 'empty' => false]); ?>
+
+												</div>
+											</div>
+
+											<!-- 2. STRING: address: string  required -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('E-mail') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-5">
+													<?= $this->Form->control('email', ['placeholder' => __('E-mail'), 'class' => 'form-control', 'empty' => false]); ?>
+
+												</div>
+											</div>
+
+
+											<!-- 2. STRING: address: string  required -->
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="address"><?= __('Google map url') ?>:</label>
+												<div class="col-xs-12 col-sm-12 col-md-6 col-lg-9 col-xl-9 col-xxl-9">
+													<?= $this->Form->control('google_map_url', ['placeholder' => __('Google map url'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
 											<!-- 2. STRING: longitude: string  -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="longitude"><?= __('Longitude') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('longitude', ['label' => __('Longitude'), 'placeholder' => __('Longitude'), 'class' => 'form-control', 'empty' => true]); ?>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="longitude"><?= __('Long.') ?>:</label>
+												<div class="col-md-4">
+													<?= $this->Form->control('longitude', ['placeholder' => __('Longitude'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
-											</div>
 
-											<!-- 2. STRING: latitude: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="latitude"><?= __('Latitude') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('latitude', ['label' => __('Latitude'), 'placeholder' => __('Latitude'), 'class' => 'form-control', 'empty' => true]); ?>
+												<label class="col-form-label col-md-1 pt-1 text-start text-md-end" for="latitude"><?= __('Lat.') ?>:</label>
+												<div class="col-md-4">
+													<?= $this->Form->control('latitude', ['placeholder' => __('Latitude'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -200,7 +210,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<!-- 3. INTEGER: maximum_distance: integer  required -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="maximum-distance"><?= __('Maximum Distance') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-3">
 													<?= $this->Form->control('maximum_distance', ['class' => 'form-control', 'placeholder' => __('Maximum Distance'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
 
 												</div>
@@ -209,7 +219,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<!-- 5. DATE: date_from: date  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="date-from"><?= __('Date From') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
 													<div class="form-group date">
 														<div class="input-group date-from" id="date-from" data-target-input="nearest">
 															<?= $this->Form->control('date_from', ['type' => 'text', 'placeholder' => __('Date From'), 'class' => 'form-control', 'empty' => true]); ?>
@@ -220,12 +230,8 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 														</div>
 													</div>
 												</div>
-											</div>
 
-											<!-- 5. DATE: date_to: date  -->
-											<div class="mb-3 row required">
-												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="date-to"><?= __('Date To') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
 													<div class="form-group date">
 														<div class="input-group date-to" id="date-to" data-target-input="nearest">
 															<?= $this->Form->control('date_to', ['type' => 'text', 'placeholder' => __('Date To'), 'class' => 'form-control', 'empty' => true]); ?>
@@ -250,17 +256,8 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 											<!-- 3. INTEGER: pos: integer  required -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-3">
 													<?= $this->Form->control('pos', ['class' => 'form-control', 'placeholder' => __('Pos'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: action: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="action"><?= __('Action') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('action', ['label' => __('Action'), 'placeholder' => __('Action'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -276,6 +273,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 */ ?>
 
 									</div><!-- /.TAB PANEL -->
+
 										
 								</div>
 

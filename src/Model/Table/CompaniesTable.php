@@ -117,12 +117,22 @@ class CompaniesTable extends Table
         $validator
             ->scalar('keywords')
             ->maxLength('keywords', 2000)
-            ->allowEmptyString('keywords');
+            ->notEmptyString('keywords');
 
         $validator
             ->scalar('keywords_slug')
             ->maxLength('keywords_slug', 2000)
             ->allowEmptyString('keywords_slug');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 2000)
+            ->notEmptyString('description');
+
+        $validator
+            ->scalar('description_slug')
+            ->maxLength('description_slug', 2000)
+            ->allowEmptyString('description_slug');
 
         $validator
             ->nonNegativeInteger('city_id')
@@ -141,14 +151,24 @@ class CompaniesTable extends Table
             ->notEmptyString('house_number');
 
         $validator
-            ->scalar('description')
-            ->maxLength('description', 2000)
-            ->allowEmptyString('description');
+            ->scalar('phone')
+            ->maxLength('phone', 30)
+            ->allowEmptyString('phone');
 
         $validator
-            ->scalar('description_slug')
-            ->maxLength('description_slug', 2000)
-            ->allowEmptyString('description_slug');
+            ->scalar('phone2')
+            ->maxLength('phone2', 30)
+            ->allowEmptyString('phone2');
+
+        $validator
+            ->scalar('web')
+            ->maxLength('web', 250)
+            ->allowEmptyString('web');
+
+        $validator
+            ->scalar('email')
+            ->maxLength('email', 100)
+            ->allowEmptyString('email');
 
         $validator
             ->scalar('longitude')
