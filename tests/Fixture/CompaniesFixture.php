@@ -40,14 +40,14 @@ class CompaniesFixture extends TestFixture
                 'longitude' => 'Lorem ipsum dolor sit amet',
                 'latitude' => 'Lorem ipsum dolor sit amet',
                 'maximum_distance' => 1,
-                'date_from' => '2025-12-24',
-                'date_to' => '2025-12-24',
+                'date_from' => '2025-12-29',
+                'date_to' => '2025-12-29',
                 'visible' => 1,
                 'pos' => 1,
                 'action' => 'Lorem ipsum dolor ',
                 'person_count' => 1,
-                'created' => '2025-12-24 18:34:30',
-                'modified' => '2025-12-24 18:34:30',
+                'created' => '2025-12-29 09:03:15',
+                'modified' => '2025-12-29 09:03:15',
             ],
         ];
         parent::init();

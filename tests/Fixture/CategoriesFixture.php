@@ -35,8 +35,8 @@ class CategoriesFixture extends TestFixture
                 'pos' => 1,
                 'action' => 'Lorem ipsum dolor ',
                 'company_count' => 1,
-                'created' => '2025-12-24 18:37:05',
-                'modified' => '2025-12-24 18:37:05',
+                'created' => '2025-12-25 10:19:15',
+                'modified' => '2025-12-25 10:19:15',
             ],
         ];
         parent::init();

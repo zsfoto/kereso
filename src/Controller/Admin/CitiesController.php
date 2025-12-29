@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+
 use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Utility\Text;
+
 
 /**
- * Companies Controller
+ * Cities Controller
  *
- * @property \App\Model\Table\CompaniesTable $Companies
+ * @property \App\Model\Table\CitiesTable $Cities
  */
-class CompaniesController extends AppController
+class CitiesController extends AppController
 {
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	 = ['id' => 'asc'];
@@ -40,13 +41,13 @@ class CompaniesController extends AppController
 		//	['back' => false, 'add' => true, 'edit' => false, 'save' => false, 'view' => false, 'delete' => false]
 		//));
 
-		$this->set('title', __('Browse the') . ': ' . __('Companies'));
+		$this->set('title', __('Browse the') . ': ' . __('Cities'));
 		
 		//$this->config['paginate_limit'] = 1000;
 		$queryParams = $this->request->getQuery();
-		$conditions 	 = [];		// Default conditions
+		$conditions 	 = ['Cities.country_id' => 1, 'Cities.county_id' => 3];		// Default conditions
 		$page 		 	 = '1';
-		$sort 		 	 = 'id';
+		$sort 		 	 = 'name';
 		$direction 	 	 = 'asc';
 		$showSearchBar	 = false;
 		$searchInSession = '';
@@ -99,12 +100,12 @@ class CompaniesController extends AppController
 			return $this->redirect(['controller' => $this->controller, 'action' => 'index', '?' => array_merge(['page' => 1], $queryParams) ]);
 		}
 
-		$this->paginate['Companies']['page'] 	= $page;
+		$this->paginate['Cities']['page'] 	= $page;
 		
 		if($sort !== null && $direction !== null){
-			$this->paginate['Companies']['order'] 	= [$sort => $direction];
+			$this->paginate['Cities']['order'] 	= [$sort => $direction];
 		}else{
-			$this->paginate['Companies']['order'] 	= $this->defaultOrder;
+			$this->paginate['Cities']['order'] 	= $this->defaultOrder;
 		}
 		
 		// ############################# /.SORT ORDER & PAGE ###############################
@@ -124,8 +125,8 @@ class CompaniesController extends AppController
 		// ############################# QUERY #############################################
 		if($search !== ''){
 			$showSearchBar	 = true;
-			$query = $this->Companies->find()
-				->contain(['Icons', 'Categories', 'Cities'])
+			$query = $this->Cities->find()
+				->contain(['Countries', 'Counties'])
 				->where([
 					//$conditions,
 					'OR' => [
@@ -135,15 +136,16 @@ class CompaniesController extends AppController
 					]
 				]);
 		}else{
-			$query = $this->Companies->find()->contain(['Icons', 'Categories', 'Cities'])->where($conditions);
+			$query = $this->Cities->find()->contain(['Countries', 'Counties'])->where($conditions);
 		}
 		// ############################# /.QUERY ###########################################
 
+
 		// ############################# PAGINATE ############################################
 		try {
-			$this->paginate['Companies']['limit'] = $this->config['paginate_limit'];
-			$this->paginate['Companies']['maxLimit'] = $this->config['paginate_limit'];
-			$companies = $this->paginate($query);
+			$this->paginate['Cities']['limit'] = $this->config['paginate_limit'];
+			$this->paginate['Cities']['maxLimit'] = $this->config['paginate_limit'];
+			$cities = $this->paginate($query);
 		} catch (NotFoundException $e) {
 			// Do something here like redirecting to first or last page.
 			// $e->getPrevious()->getAttributes('pagingParams') will give you required info.
@@ -171,17 +173,17 @@ class CompaniesController extends AppController
         $this->set('search', $search);
         $this->set('showSearchBar', $showSearchBar);
 
-		if(empty($companies->toArray())){
+		if(empty($cities->toArray())){
 			return $this->redirect(['action' => 'add']);
 		}
 		
-		$this->set(compact('companies'));
+		$this->set(compact('cities'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id City id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -192,16 +194,16 @@ class CompaniesController extends AppController
 		//));
 
 		try {
-			$company = $this->Companies->get((int) $id, contain: ['Icons', 'Categories', 'Cities', 'Persons']);
+			$city = $this->Cities->get((int) $id, contain: ['Countries', 'Counties', 'Companies']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		$this->set('title', __('View the') . ': ' . __('company') . ' ' . __('record'));
+		$this->set('title', __('View the') . ': ' . __('city') . ' ' . __('record'));
 		$this->session->write('Layout.' . $this->controller . '.LastId', $id);
-		$name = $company->name;
-		$this->set(compact('company', 'id', 'name'));
+		$name = $city->name;
+		$this->set(compact('city', 'id', 'name'));
     }
 
     /**
@@ -215,50 +217,44 @@ class CompaniesController extends AppController
 		//	['back' => true, 'add' => false, 'edit' => false, 'save' => true, 'view' => false, 'delete' => false]
 		//));
 		
-		$this->set('title', __('Add new') . ': ' . __('company') . ' ' . __('record'));
-        $company = $this->Companies->newEmptyEntity();
+		$this->set('title', __('Add new') . ': ' . __('city') . ' ' . __('record'));
+        $city = $this->Cities->newEmptyEntity();
         if ($this->request->is('post')) {
 			$data = $this->request->getData();
 			//debug($data);
-            $company = $this->Companies->patchEntity($company, $data);
-			$company->action = 'add';
-			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
-				
-			//dd($company);
+            $city = $this->Cities->patchEntity($city, $data);
+			//dd($city);
 			/*
 				if(...){
-					$company->setErrors('field', __('Message'));
+					$city->setErrors('field', __('Message'));
 				}
 			*/
-			//dd($company->getErrors());
-            if (!$company->hasErrors() && $this->Companies->save($company)) {
-                //$this->Flash->success(__('The company has been saved.'), ['plugin' => 'JeffAdmin5']);
+			//dd($city->getErrors());
+            if (!$city->hasErrors() && $this->Cities->save($city)) {
+                //$this->Flash->success(__('The city has been saved.'), ['plugin' => 'JeffAdmin5']);
                 $this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
-				$this->session->write('Layout.' . $this->controller . '.LastId', $company->id);
+				$this->session->write('Layout.' . $this->controller . '.LastId', $city->id);
 
                 //return $this->redirect(['action' => 'add']);
                 return $this->redirect([
 					'controller' => $this->controller,
 					'action' => 'index',
-					'#' => $company->id
+					'#' => $city->id
 				]);
 
             }
+            //$this->Flash->error(__('The city could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
             $this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $icons = $this->Companies->Icons->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-        $categories = $this->Companies->Categories->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		//																Magyarország, Baranya
-        $cities = $this->Companies->Cities->find('list', conditions: ['Cities.country_id' => 1, 'Cities.county_id' => 3], limit: 5000, order: ['name' => 'asc'])->all();
-        $this->set(compact('company', 'icons', 'categories', 'cities'));
+        $countries = $this->Cities->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+        $counties = $this->Cities->Counties->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+        $this->set(compact('city', 'countries', 'counties'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id City id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -269,56 +265,51 @@ class CompaniesController extends AppController
 		//));
 
 		try {
-			$company = $this->Companies->get((int) $id, contain: []);
+			$city = $this->Cities->get((int) $id, contain: []);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		$this->set('title', __('Edit the') . ': ' . __('company') . ' ' . __('record'));
+		$this->set('title', __('Edit the') . ': ' . __('city') . ' ' . __('record'));
 		$this->session->write('Layout.' . $this->controller . '.LastId', $id);
 			
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
 			//debug($data);
-			$company = $this->Companies->patchEntity($company, $data);
-			$company->action = 'upd';
-			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
-			//dd($company);
+			$city = $this->Cities->patchEntity($city, $data);
+			//dd($city);
 			/*
 				if(...){
-					$company->setError('field', __('Message'));
+					$city->setError('field', __('Message'));
 				}
 			*/
-			//dd($company->getErrors());
-			if (!$company->hasErrors() && $this->Companies->save($company)) {
-				//$this->Flash->success(__('The company has been saved.'), ['plugin' => 'JeffAdmin5']);
+			//dd($city->getErrors());
+			if (!$city->hasErrors() && $this->Cities->save($city)) {
+				//$this->Flash->success(__('The city has been saved.'), ['plugin' => 'JeffAdmin5']);
 				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 
 				//return $this->redirect(['action' => 'index']);
 				return $this->redirect([
 					'controller' => $this->controller,
 					'action' => 'index',
-					'#' => $company->id
+					'#' => $city->id
 				]);
 
 			}
+			//$this->Flash->error(__('The city could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $icons = $this->Companies->Icons->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-        $categories = $this->Companies->Categories->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		//																Magyarország, Baranya
-        $cities = $this->Companies->Cities->find('list', conditions: ['Cities.country_id' => 1, 'Cities.county_id' => 3], limit: 5000, order: ['name' => 'asc'])->all();
-		$name = $company->name;
-        $this->set(compact('company', 'icons', 'categories', 'cities', 'id', 'name'));
+        $countries = $this->Cities->Countries->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+        $counties = $this->Cities->Counties->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
+		$name = $city->name;
+        $this->set(compact('city', 'countries', 'counties', 'id', 'name'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id City id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -327,18 +318,18 @@ class CompaniesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 
 		try {
-			$company = $this->Companies->get((int) $id);
+			$city = $this->Cities->get((int) $id);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		if ($this->Companies->delete($company)) {
+		if ($this->Cities->delete($city)) {
 			$this->session->delete('Layout.' . $this->controller . '.LastId');
-			//$this->Flash->success(__('The company has been deleted.'), ['plugin' => 'JeffAdmin5']);
+			//$this->Flash->success(__('The city has been deleted.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->success(__('The has been deleted.'), ['plugin' => 'JeffAdmin5']);
 		} else {
-			//$this->Flash->error(__('The company could not be deleted. Please, try again.'), ['plugin' => 'JeffAdmin5']);
+			//$this->Flash->error(__('The city could not be deleted. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The has been deleted. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
 		}
 

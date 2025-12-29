@@ -66,6 +66,10 @@ class CompaniesTable extends Table
             'foreignKey' => 'category_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Cities', [
+            'foreignKey' => 'city_id',
+            'joinType' => 'INNER',
+        ]);
         $this->hasMany('Persons', [
             'foreignKey' => 'company_id',
         ]);
@@ -122,7 +126,6 @@ class CompaniesTable extends Table
 
         $validator
             ->nonNegativeInteger('city_id')
-            ->requirePresence('city_id', 'create')
             ->notEmptyString('city_id');
 
         $validator
@@ -201,6 +204,7 @@ class CompaniesTable extends Table
     {
         $rules->add($rules->existsIn(['icon_id'], 'Icons'), ['errorField' => '0']);
         $rules->add($rules->existsIn(['category_id'], 'Categories'), ['errorField' => '1']);
+        $rules->add($rules->existsIn(['city_id'], 'Cities'), ['errorField' => '2']);
 
         return $rules;
     }

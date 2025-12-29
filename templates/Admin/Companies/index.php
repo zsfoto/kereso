@@ -15,6 +15,8 @@ $local_config = [
 	'show_id' 			=> true,
 	'show_pos' 			=> false,
 	'show_counters'		=> false,
+	'show_created'		=> false,
+	'show_modified'		=> false,
 	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
@@ -61,23 +63,22 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 											<th class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string category-id"><?= $this->Paginator->sort('category_id') ?></th><!-- H.0. -->
-											<th class="string logo"><?= $this->Paginator->sort('logo') ?></th><!-- H.1. -->
-											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
+											<th class="string"><?= $this->Paginator->sort('logo') ?></th><!-- H.1. -->
 											<th class="string banner"><?= $this->Paginator->sort('banner') ?></th><!-- H.1. -->
-											<th class="string name-slug"><?= $this->Paginator->sort('name_slug') ?></th><!-- H.1. -->
-											<th class="string keywords"><?= $this->Paginator->sort('keywords') ?></th><!-- H.1. -->
-											<th class="string keywords-slug"><?= $this->Paginator->sort('keywords_slug') ?></th><!-- H.1. -->
-											<th class="integer city-id"><?= $this->Paginator->sort('city_id') ?></th><!-- H.3. -->
-											<th class="string address"><?= $this->Paginator->sort('address') ?></th><!-- H.1. -->
-											<th class="string house-number"><?= $this->Paginator->sort('house_number') ?></th><!-- H.1. -->
+											<th class="string name">
+													<?= $this->Paginator->sort('name') ?><br>
+													<?= $this->Paginator->sort('keywords') ?>
+											</th><!-- H.1. -->
+											<th class="string city-id">
+												<?= $this->Paginator->sort('city_id') ?><br>
+												<?= $this->Paginator->sort('address') ?>; <?= $this->Paginator->sort('house_number') ?>
+											</th><!-- H.1. -->
 											<th class="string description"><?= $this->Paginator->sort('description') ?></th><!-- H.1. -->
-											<th class="string description-slug"><?= $this->Paginator->sort('description_slug') ?></th><!-- H.1. -->
 											<th class="string longitude"><?= $this->Paginator->sort('longitude') ?></th><!-- H.1. -->
 											<th class="string latitude"><?= $this->Paginator->sort('latitude') ?></th><!-- H.1. -->
 											<th class="integer maximum-distance"><?= $this->Paginator->sort('maximum_distance') ?></th><!-- H.3. -->
 											<th class="date date-from"><?= $this->Paginator->sort('date_from') ?></th><!-- H.1. -->
 											<th class="date date-to"><?= $this->Paginator->sort('date_to') ?></th><!-- H.1. -->
-											<th class="string action"><?= $this->Paginator->sort('action') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -122,22 +123,21 @@ $config = array_merge($global_config, $local_config);
 											<td class="string link icon-id" value="<?= $company->icon_id ?>"><?= $company->hasValue('icon') ? $this->Html->link($company->icon->name, ['controller' => 'Icons', 'action' => 'view', $company->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link category-id" value="<?= $company->category_id ?>"><?= $company->hasValue('category') ? $this->Html->link($company->category->name, ['controller' => 'Categories', 'action' => 'view', $company->category->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string logo" value="<?= $company->logo ?>"><?= h($company->logo) ?></td>
-											<td class="string name" value="<?= $company->name ?>"><?= h($company->name) ?></td>
 											<td class="string banner" value="<?= $company->banner ?>"><?= h($company->banner) ?></td>
-											<td class="string name-slug" value="<?= $company->name_slug ?>"><?= h($company->name_slug) ?></td>
-											<td class="string keywords" value="<?= $company->keywords ?>"><?= h($company->keywords) ?></td>
-											<td class="string keywords-slug" value="<?= $company->keywords_slug ?>"><?= h($company->keywords_slug) ?></td>
-											<td class="integer city-id" value="<?= $company->city_id ?>"><?= $this->Number->format($company->city_id, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
-											<td class="string address" value="<?= $company->address ?>"><?= h($company->address) ?></td>
-											<td class="string house-number" value="<?= $company->house_number ?>"><?= h($company->house_number) ?></td>
+											<td class="string name" value="<?= $company->name ?>">
+												<span class="fw-bold"><?= h($company->name) ?></span><br>
+												<?= h($company->keywords) ?>
+											</td>
+											<td class="string link city-id" value="<?= $company->city_id ?>">
+												<?= $company->hasValue('city') ? $this->Html->link($company->city->name, ['controller' => 'Cities', 'action' => 'view', $company->city->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span><br>
+												<span class="fw-normal"><?= $company->address ?> <?= $company->house_number ?>.</span>
+											</td>
 											<td class="string description" value="<?= $company->description ?>"><?= h($company->description) ?></td>
-											<td class="string description-slug" value="<?= $company->description_slug ?>"><?= h($company->description_slug) ?></td>
 											<td class="string longitude" value="<?= $company->longitude ?>"><?= h($company->longitude) ?></td>
 											<td class="string latitude" value="<?= $company->latitude ?>"><?= h($company->latitude) ?></td>
 											<td class="integer maximum-distance" value="<?= $company->maximum_distance ?>"><?= $this->Number->format($company->maximum_distance, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
 											<td class="date date-from" value="<?= $company->date_from ?>"><?= h($company->date_from) ?></td>
 											<td class="date date-to" value="<?= $company->date_to ?>"><?= h($company->date_to) ?></td>
-											<td class="string action" value="<?= $company->action ?>"><?= h($company->action) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $company->pos ?>"><?= h($company->pos) ?></td>
 <?php } ?>

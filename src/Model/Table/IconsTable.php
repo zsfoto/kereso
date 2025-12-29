@@ -15,8 +15,6 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * Icons Model
  *
- * @property \App\Model\Table\AdcategoriesTable&\Cake\ORM\Association\HasMany $Adcategories
- * @property \App\Model\Table\Ads1Table&\Cake\ORM\Association\HasMany $Ads1
  * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\HasMany $Categories
  * @property \App\Model\Table\CompaniesTable&\Cake\ORM\Association\HasMany $Companies
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\HasMany $Persons
@@ -56,12 +54,6 @@ class IconsTable extends Table
         $this->addBehavior('Timestamp');
 		$this->addBehavior('JeffAdmin5.Datepicker');
 
-        //$this->hasMany('Adcategories', [
-        //    'foreignKey' => 'icon_id',
-        //]);
-        //$this->hasMany('Ads1', [
-        //    'foreignKey' => 'icon_id',
-        //]);
         $this->hasMany('Categories', [
             'foreignKey' => 'icon_id',
         ]);
@@ -94,7 +86,6 @@ class IconsTable extends Table
             ->notEmptyString('filename');
 
         $validator
-            ->boolean('visible')
             ->notEmptyString('visible');
 
         $validator

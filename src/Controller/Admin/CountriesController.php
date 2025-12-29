@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+
 use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Utility\Text;
+
 
 /**
- * Companies Controller
+ * Countries Controller
  *
- * @property \App\Model\Table\CompaniesTable $Companies
+ * @property \App\Model\Table\CountriesTable $Countries
  */
-class CompaniesController extends AppController
+class CountriesController extends AppController
 {
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	 = ['id' => 'asc'];
@@ -40,7 +41,7 @@ class CompaniesController extends AppController
 		//	['back' => false, 'add' => true, 'edit' => false, 'save' => false, 'view' => false, 'delete' => false]
 		//));
 
-		$this->set('title', __('Browse the') . ': ' . __('Companies'));
+		$this->set('title', __('Browse the') . ': ' . __('Countries'));
 		
 		//$this->config['paginate_limit'] = 1000;
 		$queryParams = $this->request->getQuery();
@@ -99,12 +100,12 @@ class CompaniesController extends AppController
 			return $this->redirect(['controller' => $this->controller, 'action' => 'index', '?' => array_merge(['page' => 1], $queryParams) ]);
 		}
 
-		$this->paginate['Companies']['page'] 	= $page;
+		$this->paginate['Countries']['page'] 	= $page;
 		
 		if($sort !== null && $direction !== null){
-			$this->paginate['Companies']['order'] 	= [$sort => $direction];
+			$this->paginate['Countries']['order'] 	= [$sort => $direction];
 		}else{
-			$this->paginate['Companies']['order'] 	= $this->defaultOrder;
+			$this->paginate['Countries']['order'] 	= $this->defaultOrder;
 		}
 		
 		// ############################# /.SORT ORDER & PAGE ###############################
@@ -124,8 +125,7 @@ class CompaniesController extends AppController
 		// ############################# QUERY #############################################
 		if($search !== ''){
 			$showSearchBar	 = true;
-			$query = $this->Companies->find()
-				->contain(['Icons', 'Categories', 'Cities'])
+			$query = $this->Countries->find()
 				->where([
 					//$conditions,
 					'OR' => [
@@ -135,15 +135,16 @@ class CompaniesController extends AppController
 					]
 				]);
 		}else{
-			$query = $this->Companies->find()->contain(['Icons', 'Categories', 'Cities'])->where($conditions);
+			$query = $this->Countries->find()->where($conditions);
 		}
 		// ############################# /.QUERY ###########################################
 
+
 		// ############################# PAGINATE ############################################
 		try {
-			$this->paginate['Companies']['limit'] = $this->config['paginate_limit'];
-			$this->paginate['Companies']['maxLimit'] = $this->config['paginate_limit'];
-			$companies = $this->paginate($query);
+			$this->paginate['Countries']['limit'] = $this->config['paginate_limit'];
+			$this->paginate['Countries']['maxLimit'] = $this->config['paginate_limit'];
+			$countries = $this->paginate($query);
 		} catch (NotFoundException $e) {
 			// Do something here like redirecting to first or last page.
 			// $e->getPrevious()->getAttributes('pagingParams') will give you required info.
@@ -171,17 +172,17 @@ class CompaniesController extends AppController
         $this->set('search', $search);
         $this->set('showSearchBar', $showSearchBar);
 
-		if(empty($companies->toArray())){
+		if(empty($countries->toArray())){
 			return $this->redirect(['action' => 'add']);
 		}
 		
-		$this->set(compact('companies'));
+		$this->set(compact('countries'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id Country id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -192,16 +193,16 @@ class CompaniesController extends AppController
 		//));
 
 		try {
-			$company = $this->Companies->get((int) $id, contain: ['Icons', 'Categories', 'Cities', 'Persons']);
+			$country = $this->Countries->get((int) $id, contain: ['Cities', 'Counties']);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		$this->set('title', __('View the') . ': ' . __('company') . ' ' . __('record'));
+		$this->set('title', __('View the') . ': ' . __('country') . ' ' . __('record'));
 		$this->session->write('Layout.' . $this->controller . '.LastId', $id);
-		$name = $company->name;
-		$this->set(compact('company', 'id', 'name'));
+		$name = $country->name;
+		$this->set(compact('country', 'id', 'name'));
     }
 
     /**
@@ -215,50 +216,42 @@ class CompaniesController extends AppController
 		//	['back' => true, 'add' => false, 'edit' => false, 'save' => true, 'view' => false, 'delete' => false]
 		//));
 		
-		$this->set('title', __('Add new') . ': ' . __('company') . ' ' . __('record'));
-        $company = $this->Companies->newEmptyEntity();
+		$this->set('title', __('Add new') . ': ' . __('country') . ' ' . __('record'));
+        $country = $this->Countries->newEmptyEntity();
         if ($this->request->is('post')) {
 			$data = $this->request->getData();
 			//debug($data);
-            $company = $this->Companies->patchEntity($company, $data);
-			$company->action = 'add';
-			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
-				
-			//dd($company);
+            $country = $this->Countries->patchEntity($country, $data);
+			//dd($country);
 			/*
 				if(...){
-					$company->setErrors('field', __('Message'));
+					$country->setErrors('field', __('Message'));
 				}
 			*/
-			//dd($company->getErrors());
-            if (!$company->hasErrors() && $this->Companies->save($company)) {
-                //$this->Flash->success(__('The company has been saved.'), ['plugin' => 'JeffAdmin5']);
+			//dd($country->getErrors());
+            if (!$country->hasErrors() && $this->Countries->save($country)) {
+                //$this->Flash->success(__('The country has been saved.'), ['plugin' => 'JeffAdmin5']);
                 $this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
-				$this->session->write('Layout.' . $this->controller . '.LastId', $company->id);
+				$this->session->write('Layout.' . $this->controller . '.LastId', $country->id);
 
                 //return $this->redirect(['action' => 'add']);
                 return $this->redirect([
 					'controller' => $this->controller,
 					'action' => 'index',
-					'#' => $company->id
+					'#' => $country->id
 				]);
 
             }
+            //$this->Flash->error(__('The country could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
             $this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $icons = $this->Companies->Icons->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-        $categories = $this->Companies->Categories->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		//																Magyarország, Baranya
-        $cities = $this->Companies->Cities->find('list', conditions: ['Cities.country_id' => 1, 'Cities.county_id' => 3], limit: 5000, order: ['name' => 'asc'])->all();
-        $this->set(compact('company', 'icons', 'categories', 'cities'));
+        $this->set(compact('country'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id Country id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -269,56 +262,49 @@ class CompaniesController extends AppController
 		//));
 
 		try {
-			$company = $this->Companies->get((int) $id, contain: []);
+			$country = $this->Countries->get((int) $id, contain: []);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		$this->set('title', __('Edit the') . ': ' . __('company') . ' ' . __('record'));
+		$this->set('title', __('Edit the') . ': ' . __('country') . ' ' . __('record'));
 		$this->session->write('Layout.' . $this->controller . '.LastId', $id);
 			
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
 			//debug($data);
-			$company = $this->Companies->patchEntity($company, $data);
-			$company->action = 'upd';
-			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
-			//dd($company);
+			$country = $this->Countries->patchEntity($country, $data);
+			//dd($country);
 			/*
 				if(...){
-					$company->setError('field', __('Message'));
+					$country->setError('field', __('Message'));
 				}
 			*/
-			//dd($company->getErrors());
-			if (!$company->hasErrors() && $this->Companies->save($company)) {
-				//$this->Flash->success(__('The company has been saved.'), ['plugin' => 'JeffAdmin5']);
+			//dd($country->getErrors());
+			if (!$country->hasErrors() && $this->Countries->save($country)) {
+				//$this->Flash->success(__('The country has been saved.'), ['plugin' => 'JeffAdmin5']);
 				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 
 				//return $this->redirect(['action' => 'index']);
 				return $this->redirect([
 					'controller' => $this->controller,
 					'action' => 'index',
-					'#' => $company->id
+					'#' => $country->id
 				]);
 
 			}
+			//$this->Flash->error(__('The country could not be saved. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The save has been not. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
         }
-        $icons = $this->Companies->Icons->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-        $categories = $this->Companies->Categories->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		//																Magyarország, Baranya
-        $cities = $this->Companies->Cities->find('list', conditions: ['Cities.country_id' => 1, 'Cities.county_id' => 3], limit: 5000, order: ['name' => 'asc'])->all();
-		$name = $company->name;
-        $this->set(compact('company', 'icons', 'categories', 'cities', 'id', 'name'));
+		$name = $country->name;
+        $this->set(compact('country', 'id', 'name'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Company id.
+     * @param string|null $id Country id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -327,18 +313,18 @@ class CompaniesController extends AppController
 		$this->request->allowMethod(['post', 'delete']);
 
 		try {
-			$company = $this->Companies->get((int) $id);
+			$country = $this->Countries->get((int) $id);
 		} catch (\Cake\Datasource\Exception\RecordNotFoundException $exeption) {
 			$this->Flash->warning(__($exeption->getMessage()), ['plugin' => 'JeffAdmin5']);
 			return $this->redirect(['action' => 'index']);
 		}
 
-		if ($this->Companies->delete($company)) {
+		if ($this->Countries->delete($country)) {
 			$this->session->delete('Layout.' . $this->controller . '.LastId');
-			//$this->Flash->success(__('The company has been deleted.'), ['plugin' => 'JeffAdmin5']);
+			//$this->Flash->success(__('The country has been deleted.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->success(__('The has been deleted.'), ['plugin' => 'JeffAdmin5']);
 		} else {
-			//$this->Flash->error(__('The company could not be deleted. Please, try again.'), ['plugin' => 'JeffAdmin5']);
+			//$this->Flash->error(__('The country could not be deleted. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The has been deleted. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);
 		}
 

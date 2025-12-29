@@ -46,8 +46,8 @@ class PersonsFixture extends TestFixture
                 'visible' => 1,
                 'pos' => 1,
                 'action' => 'Lorem ipsum dolor ',
-                'created' => '2025-12-24 18:37:11',
-                'modified' => '2025-12-24 18:37:11',
+                'created' => '2025-12-25 10:19:15',
+                'modified' => '2025-12-25 10:19:15',
             ],
         ];
         parent::init();

@@ -98,16 +98,16 @@ $config = array_merge($global_config, $local_config);
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Name') ?>:</label>
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Banner') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($company->name) ?>
+													<?= h($company->banner) ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Banner') ?>:</label>
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Name') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($company->banner) ?>
+													<?= h($company->name) ?>
 
 												</div>
 											</div>
@@ -130,6 +130,12 @@ $config = array_merge($global_config, $local_config);
 												<div class="col-sm-10 p-1">
 													<?= h($company->keywords_slug) ?>
 
+												</div>
+											</div>
+											<div class="row"><!-- 1. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('City') ?>:</label>
+												<div class="col-sm-10 p-1 link">
+													<?= $company->hasValue('city') ? $this->Html->link($company->city->name, ['controller' => 'Cities', 'action' => 'view', $company->city->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span>
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
@@ -182,21 +188,9 @@ $config = array_merge($global_config, $local_config);
 												</div>
 											</div>
 											<div class="row"><!-- 3. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('City Id') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= $this->Number->format($company->city_id) ?><!-- 3.b -->
-												</div>
-											</div>
-											<div class="row"><!-- 3. -->
 												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Maximum Distance') ?>:</label>
 												<div class="col-sm-10 p-1">
 													<?= $this->Number->format($company->maximum_distance) ?><!-- 3.b -->
-												</div>
-											</div>
-											<div class="row"><!-- 3. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Visible') ?>:</label>
-												<div class="col-sm-10 p-1">
-													<?= $this->Number->format($company->visible) ?><!-- 3.b -->
 												</div>
 											</div>
 											<div class="row"><!-- 4. -->

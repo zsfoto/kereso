@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Company $company
  * @var string[]|\Cake\Collection\CollectionInterface $icons
  * @var string[]|\Cake\Collection\CollectionInterface $categories
+ * @var string[]|\Cake\Collection\CollectionInterface $cities
  */
 ?>
 <?php
@@ -88,15 +89,6 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												</div>
 											</div>
 
-											<!-- 2. STRING: name: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
-
-												</div>
-											</div>
-
 											<!-- 2. STRING: banner: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="banner"><?= __('Banner') ?>:</label>
@@ -106,11 +98,11 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												</div>
 											</div>
 
-											<!-- 2. STRING: name_slug: string  required -->
+											<!-- 2. STRING: name: string  required -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name-slug"><?= __('Name Slug') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name_slug', ['label' => __('Name Slug'), 'placeholder' => __('Name Slug'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
 
 												</div>
 											</div>
@@ -124,20 +116,11 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												</div>
 											</div>
 
-											<!-- 2. STRING: keywords_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywords-slug"><?= __('Keywords Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('keywords_slug', ['label' => __('Keywords Slug'), 'placeholder' => __('Keywords Slug'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 3. INTEGER: city_id: integer  required -->
-											<div class="mb-3 form-group row number required">
+											<!-- 1. SELECT: city_id: integer  required -->
+											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="city-id"><?= __('City Id') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
-													<?= $this->Form->control('city_id', ['class' => 'form-control', 'placeholder' => __('City Id'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
+												<div class="col-md-4">
+													<?= $this->Form->control('city_id', ['options' => $cities, 'placeholder' => __('City Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '10', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -165,15 +148,6 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description"><?= __('Description') ?>:</label>
 												<div class="col-md-9">
 													<?= $this->Form->control('description', ['label' => __('Description'), 'placeholder' => __('Description'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: description_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description-slug"><?= __('Description Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('description_slug', ['label' => __('Description Slug'), 'placeholder' => __('Description Slug'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -208,7 +182,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 											<!-- 5. DATE: date_from: date  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="date-from"><?= __('Date From') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-2 col-xxl-2">
 													<div class="form-group date">
 														<div class="input-group date-from" id="date-from" data-target-input="nearest">
 															<?= $this->Form->control('date_from', ['type' => 'text', 'placeholder' => __('Date From'), 'class' => 'form-control', 'empty' => true]); ?>
@@ -219,12 +193,8 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 														</div>
 													</div>
 												</div>
-											</div>
 
-											<!-- 5. DATE: date_to: date  -->
-											<div class="mb-3 row required">
-												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="date-to"><?= __('Date To') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-2 col-xxl-2">
 													<div class="form-group date">
 														<div class="input-group date-to" id="date-to" data-target-input="nearest">
 															<?= $this->Form->control('date_to', ['type' => 'text', 'placeholder' => __('Date To'), 'class' => 'form-control', 'empty' => true]); ?>
@@ -251,15 +221,6 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
 												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
 													<?= $this->Form->control('pos', ['class' => 'form-control', 'placeholder' => __('Pos'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: action: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="action"><?= __('Action') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('action', ['label' => __('Action'), 'placeholder' => __('Action'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -303,7 +264,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/css/tempus-dominus.min",
 			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/css/bootstrap-select.min",
-			//"jeffAdmin5./assets/plugins/icheck-1.0.3/skins/all",
+			"jeffAdmin5./assets/plugins/icheck-1.0.3/skins/all",
 
 			// "jeffAdmin5./assets/plugins/select2-4.1.0-rc.0/dist/css/select2.min",	// If you want to use Select 2, but it's not finish!!!
 			// "jeffAdmin5./assets/css/select2-bootstrap-5-theme.min",					// If you want to use Select 2, but it's not finish!!!
@@ -321,7 +282,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 			//'jeffAdmin5./assets/plugins/jReadMore-master/dist/read-more.min',
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/bootstrap-select.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/i18n/defaults-hu_HU.min",
-			//"jeffAdmin5./assets/plugins/icheck-1.0.3/icheck.min",
+			"jeffAdmin5./assets/plugins/icheck-1.0.3/icheck.min",
 			
 			//"jeffAdmin5./assets/plugins/jquery-copy-to-clipboard-master/jquery.copy-to-clipboard",
 			
@@ -341,7 +302,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 	jeffAdminInitInputSpinner()
 	jeffAdminInitDatePicker('date-from'<?= $company->date_from !== null ? ", '" . $company->date_from->format('Y-m-d') . "'" : "" ?>)
 	jeffAdminInitDatePicker('date-to'<?= $company->date_to !== null ? ", '" . $company->date_to->format('Y-m-d') . "'" : "" ?>)
-	//jeffAdminInitICheck('icheckbox_flat-blue');
+	jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){
 		$('#button-submit').click( function(){

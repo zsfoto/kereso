@@ -10,27 +10,23 @@ use Cake\Http\Exception\NotFoundException;
 
 
 /**
- * Icon Entity
+ * County Entity
  *
  * @property int $id
+ * @property int $country_id
  * @property string $name
- * @property string $filename
+ * @property string $shortname
+ * @property string $capitalcity
+ * @property string $region
+ * @property int $pos
  * @property int $visible
- * @property int|null $pos
- * @property \Cake\I18n\DateTime|null $last_used
- * @property int|null $adcategory_count
- * @property int|null $ad_count
- * @property int|null $category_count
- * @property int|null $company_count
- * @property int|null $person_count
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  *
- * @property \App\Model\Entity\Category[] $categories
- * @property \App\Model\Entity\Company[] $companies
- * @property \App\Model\Entity\Person[] $persons
+ * @property \App\Model\Entity\Country $country
+ * @property \App\Model\Entity\City[] $cities
  */
-class Icon extends Entity
+class County extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -42,20 +38,16 @@ class Icon extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
+        'country_id' => true,
         'name' => true,
-        'filename' => true,
-        'visible' => true,
+        'shortname' => true,
+        'capitalcity' => true,
+        'region' => true,
         'pos' => true,
-        'last_used' => true,
-        'adcategory_count' => true,
-        'ad_count' => true,
-        'category_count' => true,
-        'company_count' => true,
-        'person_count' => true,
+        'visible' => true,
         'created' => true,
         'modified' => true,
-        'categories' => true,
-        'companies' => true,
-        'persons' => true,
+        'country' => true,
+        'cities' => true,
     ];
 }

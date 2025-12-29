@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller\Admin;
 
 
-use App\Controller\Admin\CompaniesController;
+use App\Controller\Admin\CountiesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\Core\Configure;
@@ -12,11 +12,11 @@ use Cake\Http\Exception\NotFoundException;
 
 
 /**
- * App\Controller\Admin\CompaniesController Test Case
+ * App\Controller\Admin\CountiesController Test Case
  *
- * @link \App\Controller\Admin\CompaniesController
+ * @link \App\Controller\Admin\CountiesController
  */
-class CompaniesControllerTest extends TestCase
+class CountiesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -26,18 +26,16 @@ class CompaniesControllerTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
-        'app.Companies',
-        'app.Icons',
-        'app.Categories',
+        'app.Counties',
+        'app.Countries',
         'app.Cities',
-        'app.Persons',
     ];
 
     /**
      * Test index method
      *
      * @return void
-     * @link \App\Controller\Admin\CompaniesController::index()
+     * @link \App\Controller\Admin\CountiesController::index()
      */
     public function testIndex(): void
     {
@@ -48,7 +46,7 @@ class CompaniesControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     * @link \App\Controller\Admin\CompaniesController::view()
+     * @link \App\Controller\Admin\CountiesController::view()
      */
     public function testView(): void
     {
@@ -59,7 +57,7 @@ class CompaniesControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     * @link \App\Controller\Admin\CompaniesController::add()
+     * @link \App\Controller\Admin\CountiesController::add()
      */
     public function testAdd(): void
     {
@@ -70,7 +68,7 @@ class CompaniesControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     * @link \App\Controller\Admin\CompaniesController::edit()
+     * @link \App\Controller\Admin\CountiesController::edit()
      */
     public function testEdit(): void
     {
@@ -81,7 +79,7 @@ class CompaniesControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     * @link \App\Controller\Admin\CompaniesController::delete()
+     * @link \App\Controller\Admin\CountiesController::delete()
      */
     public function testDelete(): void
     {

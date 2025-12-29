@@ -16,8 +16,6 @@ use Cake\Http\Exception\NotFoundException;
  * Categories Model
  *
  * @property \App\Model\Table\IconsTable&\Cake\ORM\Association\BelongsTo $Icons
- * @property \App\Model\Table\AdsTable&\Cake\ORM\Association\HasMany $Ads
- * @property \App\Model\Table\CategoryStatsTable&\Cake\ORM\Association\HasMany $CategoryStats
  * @property \App\Model\Table\CompaniesTable&\Cake\ORM\Association\HasMany $Companies
  *
  * @method \App\Model\Entity\Category newEmptyEntity()
@@ -60,12 +58,6 @@ class CategoriesTable extends Table
 
         $this->belongsTo('Icons', [
             'foreignKey' => 'icon_id',
-        ]);
-        $this->hasMany('Ads', [
-            'foreignKey' => 'category_id',
-        ]);
-        $this->hasMany('CategoryStats', [
-            'foreignKey' => 'category_id',
         ]);
         $this->hasMany('Companies', [
             'foreignKey' => 'category_id',
