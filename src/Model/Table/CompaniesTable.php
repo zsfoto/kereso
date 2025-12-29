@@ -93,16 +93,6 @@ class CompaniesTable extends Table
             ->notEmptyString('category_id');
 
         $validator
-            ->scalar('logo')
-            ->maxLength('logo', 250)
-            ->allowEmptyString('logo');
-
-        $validator
-            ->scalar('banner')
-            ->maxLength('banner', 250)
-            ->allowEmptyString('banner');
-
-        $validator
             ->scalar('name')
             ->maxLength('name', 250)
             ->requirePresence('name', 'create')
@@ -117,22 +107,12 @@ class CompaniesTable extends Table
         $validator
             ->scalar('keywords')
             ->maxLength('keywords', 2000)
-            ->notEmptyString('keywords');
+            ->allowEmptyString('keywords');
 
         $validator
             ->scalar('keywords_slug')
             ->maxLength('keywords_slug', 2000)
             ->allowEmptyString('keywords_slug');
-
-        $validator
-            ->scalar('description')
-            ->maxLength('description', 2000)
-            ->notEmptyString('description');
-
-        $validator
-            ->scalar('description_slug')
-            ->maxLength('description_slug', 2000)
-            ->allowEmptyString('description_slug');
 
         $validator
             ->nonNegativeInteger('city_id')
@@ -149,6 +129,16 @@ class CompaniesTable extends Table
             ->maxLength('house_number', 20)
             ->requirePresence('house_number', 'create')
             ->notEmptyString('house_number');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 2000)
+            ->allowEmptyString('description');
+
+        $validator
+            ->scalar('description_slug')
+            ->maxLength('description_slug', 2000)
+            ->allowEmptyString('description_slug');
 
         $validator
             ->scalar('phone')
@@ -169,6 +159,11 @@ class CompaniesTable extends Table
             ->scalar('email')
             ->maxLength('email', 100)
             ->allowEmptyString('email');
+
+        $validator
+            ->scalar('goole_map_url')
+            ->maxLength('goole_map_url', 2048)
+            ->allowEmptyString('goole_map_url');
 
         $validator
             ->scalar('longitude')
@@ -209,6 +204,20 @@ class CompaniesTable extends Table
         $validator
             ->nonNegativeInteger('person_count')
             ->notEmptyString('person_count');
+
+        $validator
+            ->allowEmptyFile('file_logo')            
+            // Kiterjesztés ellenőrzése
+            ->add('file_logo', 'extension', [
+                'rule' => ['extension', ['png', 'jpg', 'jpeg']], // Csak ezeket engedi
+                'message' => 'Csak png, jpg vagy jpeg fájl tölthető fel.',
+            ])            
+            // MIME típus ellenőrzése (biztonságosabb)
+            ->add('file_logo', 'mimeType', [
+                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                'message' => 'Érvénytelen fájltípus.',
+            ]);
+
 
         return $validator;
     }

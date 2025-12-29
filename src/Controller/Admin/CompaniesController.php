@@ -17,6 +17,7 @@ class CompaniesController extends AppController
 {
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	 = ['id' => 'asc'];
+	public $targetPath		 = '';
 
     /**
      * Initialize controller
@@ -26,6 +27,13 @@ class CompaniesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+
+		$this->targetPath = WWW_ROOT . 'img' . DS . 'customers' . DS;
+
+		// Célkönyvtár: webroot/img/customers
+		if(!file_exists($this->targetPath)){
+			mkdir($this->targetPath);
+		}
 
 	}
 
@@ -221,6 +229,11 @@ class CompaniesController extends AppController
 			$data = $this->request->getData();
 			//debug($data);
             $company = $this->Companies->patchEntity($company, $data);
+
+			// 1. A fájl objektum lekérése
+			$logo = $this->request->getData('logo');
+			dd($logo);
+
 			$company->action = 'add';
 			$company->name_slug = Text::slug(strtolower($company->name), ' ');
 			$company->description_slug = Text::slug(strtolower($company->name), ' ');
@@ -280,8 +293,10 @@ class CompaniesController extends AppController
 			
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$data = $this->request->getData();
-			//debug($data);
+			//dd($data);
 			$company = $this->Companies->patchEntity($company, $data);
+			//dd($company);
+
 			$company->action = 'upd';
 			$company->name_slug = Text::slug(strtolower($company->name), ' ');
 			$company->description_slug = Text::slug(strtolower($company->name), ' ');
@@ -292,9 +307,33 @@ class CompaniesController extends AppController
 					$company->setError('field', __('Message'));
 				}
 			*/
+
+			$file_logo = $this->request->getData('file_logo');
+
+			if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
+				$ext_logo = pathinfo($file_logo->getClientFilename(), PATHINFO_EXTENSION);
+
+				//$logo_file_name = $file->getClientFilename();
+				$logo_file_name = $company->id . '_logo.' . $ext_logo;
+
+				$company->logo = $logo_file_name;
+				$company->logo_ext = $ext_logo;
+			}
+
 			//dd($company->getErrors());
 			if (!$company->hasErrors() && $this->Companies->save($company)) {
-				//$this->Flash->success(__('The company has been saved.'), ['plugin' => 'JeffAdmin5']);
+				// Ellenőrzés: történt-e feltöltés és nincs-e hiba
+				if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
+					if(file_exists($this->targetPath . $logo_file_name)){
+						unlink($this->targetPath . $logo_file_name);
+					}
+
+					$file_logo->moveTo($this->targetPath . $logo_file_name);
+
+					chmod($this->targetPath . $logo_file_name, 0664);
+				}
+				//dd($company);
+
 				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 
 				//return $this->redirect(['action' => 'index']);

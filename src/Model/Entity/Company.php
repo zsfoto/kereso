@@ -57,7 +57,9 @@ class Company extends Entity
         'icon_id' => true,
         'category_id' => true,
         'logo' => true,
+        'logo_ext' => true,
         'banner' => true,
+        'banner_ext' => true,
         'name' => true,
         'name_slug' => true,
         'keywords' => true,
@@ -67,6 +69,13 @@ class Company extends Entity
         'house_number' => true,
         'description' => true,
         'description_slug' => true,
+
+        'phone' => true,
+        'phone2' => true,
+        'web' => true,
+        'email' => true,
+        'google_map_url' => true,
+
         'longitude' => true,
         'latitude' => true,
         'maximum_distance' => true,

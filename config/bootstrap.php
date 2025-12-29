@@ -232,10 +232,10 @@ ServerRequest::addDetector('tablet', function ($request) {
 // and https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
 // \Cake\I18n\Date::setToStringFormat('dd.MM.yyyy');
 // \Cake\I18n\Time::setToStringFormat('dd.MM.yyyy HH:mm');
-//Configure::write('DebugKit.forceEnable', true);
-Configure::write('DebugKit.forceEnable', function() {
-	return $_SERVER['REMOTE_ADDR'] === '127.0.0.1';
-});
+//Configure::write('DebugKit.forceEnable', function() {
+//	return $_SERVER['REMOTE_ADDR'] === '127.0.0.1';
+//});
+Configure::write('DebugKit.forceEnable', true);
 
 Configure::write('Bake.theme', 'jeffAdmin5');
 
