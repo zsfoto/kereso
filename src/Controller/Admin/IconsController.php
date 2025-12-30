@@ -18,6 +18,9 @@ class IconsController extends AppController
 {
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	 = ['id' => 'asc'];
+	public $targetPath		 = '';
+	public $iconDir			 = '';
+	public $iconFilename	 = '';
 
     /**
      * Initialize controller
@@ -28,6 +31,18 @@ class IconsController extends AppController
     {
         parent::initialize();
 
+		$this->iconDir 		= 'icons';
+		$this->iconFilename = '_icon.';	// id . $this->iconFilename . ext;
+
+		$this->set('icon_dir', $this->iconDir);		
+		$this->set('icon_filename', $this->iconFilename);
+
+		$this->targetPath = WWW_ROOT . 'img' . DS . $this->iconDir . DS;
+
+		//$dir = new Folder($this->targetPath . 'xxx', true, 0775);
+		if(!is_dir($this->targetPath)){
+			mkdir($this->targetPath, 0775, true); // a 'true' rekurzív létrehozást jelent
+		}
 	}
 
     /**
@@ -43,8 +58,8 @@ class IconsController extends AppController
 
 		$this->set('title', __('Browse the') . ': ' . __('Icons'));
 		
-		//$this->config['paginate_limit'] = 1000;
-		$queryParams = $this->request->getQuery();
+		$this->config['paginate_limit'] = 100;
+		$queryParams 	 = $this->request->getQuery();
 		$conditions 	 = [];		// Default conditions
 		$page 		 	 = '1';
 		$sort 		 	 = 'id';
@@ -281,9 +296,34 @@ class IconsController extends AppController
 					$icon->setError('field', __('Message'));
 				}
 			*/
+
+			$file_icon = $this->request->getData('file_icon');
+			//debug($file_icon);
+			//dd($file_banner);
+
+			if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
+				$ext = pathinfo($file_icon->getClientFilename(), PATHINFO_EXTENSION);
+
+				$filename = $file_icon->getClientFilename();
+				$icon_file_name = $icon->id . $this->iconFilename . $ext;
+
+				$icon->ext = $ext;
+				$icon->filename = $filename;	// Felesleges, de itt van
+			}
+			//dd($icon);
+
 			//dd($icon->getErrors());
 			if (!$icon->hasErrors() && $this->Icons->save($icon)) {
-				//$this->Flash->success(__('The icon has been saved.'), ['plugin' => 'JeffAdmin5']);
+				if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
+					if(file_exists($this->targetPath . $icon_file_name)){
+						unlink($this->targetPath . $icon_file_name);
+					}
+
+					$file_icon->moveTo($this->targetPath . $icon_file_name);
+
+					chmod($this->targetPath . $icon_file_name, 0664);
+				}
+
 				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 
 				//return $this->redirect(['action' => 'index']);

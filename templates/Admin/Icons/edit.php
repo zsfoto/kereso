@@ -49,7 +49,7 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 
 							</div>
 
-							<?= $this->Form->create($icon, ['id' => 'main-form']) ?>
+							<?= $this->Form->create($icon, ['id' => 'main-form', 'type' => 'file']) ?>
 							
 								<?php //= $this->Form->control('_csrfToken', ['name' => '_csrfToken', 'type' => 'hidden', 'value' => $this->request->getAttribute('csrfToken')] ) ?>
 
@@ -63,7 +63,7 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
+													<?= $this->Form->control('name', ['label' => false, 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
 
 												</div>
 											</div>
@@ -72,7 +72,7 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="filename"><?= __('Filename') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('filename', ['label' => __('Filename'), 'placeholder' => __('Filename'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('file_icon', ['type' => 'file', 'placeholder' => __('Filename'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -89,16 +89,17 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 											<!-- 3. INTEGER: pos: integer  -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="pos"><?= __('Pos') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-3">
 													<?= $this->Form->control('pos', ['class' => 'form-control', 'placeholder' => __('Pos'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => true]); ?>
 
 												</div>
 											</div>
 
+<?php /*
 											<!-- 4. DATETIME: last_used: datetime  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="last-used"><?= __('Last Used') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
 													<div class="form-group datetime">
 														<div class="input-group last-used" id="last-used" data-target-input="nearest">
 															<?= $this->Form->control('last_used', ['type' => 'text', 'placeholder' => __('Last Used'), 'class' => 'form-control', 'empty' => true]); ?>
@@ -110,6 +111,7 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 													</div>
 												</div>
 											</div>
+*/ ?>
 
 										</div><!-- /.tabPanelMain -->
 										
@@ -185,7 +187,7 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 <?php $this->Html->scriptStart(['block' => 'javaScriptBottom']); ?>
 
 	jeffAdminInitInputSpinner()
-	jeffAdminInitDateTimePicker('last-used'<?= $icon->last_used !== null ? ", '" . $icon->last_used->format('Y-m-d H:i:s') . "'" : "" ?>)
+	//jeffAdminInitDateTimePicker('last-used'<?= $icon->last_used !== null ? ", '" . $icon->last_used->format('Y-m-d H:i:s') . "'" : "" ?>)
 	jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){

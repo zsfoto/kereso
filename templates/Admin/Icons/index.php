@@ -15,6 +15,9 @@ $local_config = [
 	'show_id' 			=> true,
 	'show_pos' 			=> false,
 	'show_counters'		=> false,
+	'show_visible'		=> false,
+	'show_created'		=> false,
+	'show_modified'		=> false,
 	'action_db_click'	=> 'edit',	// none, edit or view
 	// ... more config params in: \JeffAdmin5\config\jeffadmin5.php
 ];
@@ -59,9 +62,8 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
+											<th class="string id"><?= $this->Paginator->sort('filename', 'Icon') ?></th><!-- H.1. -->
 											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
-											<th class="string filename"><?= $this->Paginator->sort('filename') ?></th><!-- H.1. -->
-											<th class="datetime last-used"><?= $this->Paginator->sort('last_used') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -103,9 +105,10 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $icon->id ?>"><?= h($icon->id) ?><a name="<?= $icon->id ?>"></a></td>
 <?php } ?>
+											<td class="string id" value="<?= $icon->id ?>">
+												<?= $this->Html->image($icon_dir . "/" . $icon->id . $icon_filename . $icon->ext, ['style' => 'width: 50px;'])	 ?>
+											</td>
 											<td class="string name" value="<?= $icon->name ?>"><?= h($icon->name) ?></td>
-											<td class="string filename" value="<?= $icon->filename ?>"><?= h($icon->filename) ?></td>
-											<td class="datetime last-used" value="<?= $icon->last_used ?>"><?= h($icon->last_used) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $icon->pos ?>"><?= h($icon->pos) ?></td>
 <?php } ?>

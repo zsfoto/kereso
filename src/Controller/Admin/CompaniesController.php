@@ -7,6 +7,7 @@ use App\Controller\Admin\AppController;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Text;
+//use Cake\Filesystem\Folder;	// composer require cakephp/filesystem => nincs updatelve a packages-en
 
 /**
  * Companies Controller
@@ -18,6 +19,8 @@ class CompaniesController extends AppController
 	//public $defaultOrder 	 = ['Pagecategories.name' => 'asc', 'Pages.pos' => 'asc'];	// For example
 	public $defaultOrder 	 = ['id' => 'asc'];
 	public $targetPath		 = '';
+	public $logoDir			 = '';
+	public $logoFilename	 = '';
 
     /**
      * Initialize controller
@@ -28,13 +31,18 @@ class CompaniesController extends AppController
     {
         parent::initialize();
 
-		$this->targetPath = WWW_ROOT . 'img' . DS . 'customers' . DS;
+		$this->logoDir = 'companies';
+		$this->logoFilename = '_logo.';	// id . $this->logoFilename . ext;
 
-		// Célkönyvtár: webroot/img/customers
-		if(!file_exists($this->targetPath)){
-			mkdir($this->targetPath);
+		$this->set('logo_dir', $this->logoDir);		
+		$this->set('logo_filename', $this->logoFilename);
+
+		$this->targetPath = WWW_ROOT . 'img' . DS . $this->logoDir . DS;
+
+		//$dir = new Folder($this->targetPath . 'xxx', true, 0775);
+		if(!is_dir($this->targetPath)){
+			mkdir($this->targetPath, 0775, true); // a 'true' rekurzív létrehozást jelent
 		}
-
 	}
 
     /**
@@ -309,15 +317,12 @@ class CompaniesController extends AppController
 			*/
 
 			$file_logo = $this->request->getData('file_logo');
-			$file_banner = $this->request->getData('file_banner');
-			//debug($file_logo);
-			//dd($file_banner);
 
 			if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
 				$ext_logo = pathinfo($file_logo->getClientFilename(), PATHINFO_EXTENSION);
 
 				//$logo_file_name = $file->getClientFilename();
-				$logo_file_name = $company->id . '_logo.' . $ext_logo;
+				$logo_file_name = $company->id . $this->logoFilename . $ext_logo;
 
 				$company->logo = $logo_file_name;
 				$company->logo_ext = $ext_logo;
@@ -326,7 +331,6 @@ class CompaniesController extends AppController
 			//dd($company->getErrors());
 			$company->setErrors($company->getErrors());
 			if (!$company->hasErrors() && $this->Companies->save($company)) {
-				// Ellenőrzés: történt-e feltöltés és nincs-e hiba
 				if ($file_logo instanceof \Laminas\Diactoros\UploadedFile && $file_logo->getError() === UPLOAD_ERR_OK) {
 					if(file_exists($this->targetPath . $logo_file_name)){
 						unlink($this->targetPath . $logo_file_name);
@@ -336,7 +340,6 @@ class CompaniesController extends AppController
 
 					chmod($this->targetPath . $logo_file_name, 0664);
 				}
-				//dd($company);
 
 				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 
@@ -352,7 +355,7 @@ class CompaniesController extends AppController
         }
         $icons = $this->Companies->Icons->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
         $categories = $this->Companies->Categories->find('list', conditions: ['visible' => true], limit: 200, order: ['pos' => 'asc', 'name' => 'asc'])->all();
-		//																Magyarország, Baranya
+		//																Magyarország, 					Baranya
         $cities = $this->Companies->Cities->find('list', conditions: ['Cities.country_id' => 1, 'Cities.county_id' => 3], limit: 5000, order: ['name' => 'asc'])->all();
 		$name = $company->name;
         $this->set(compact('company', 'icons', 'categories', 'cities', 'id', 'name'));

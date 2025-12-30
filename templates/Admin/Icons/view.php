@@ -330,19 +330,29 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 													<th class="please-change-type icon-id"><?= __('Icon Id') ?></th>
 													<th class="please-change-type category-id"><?= __('Category Id') ?></th>
+													<th class="please-change-type logo"><?= __('Logo') ?></th>
+													<th class="please-change-type logo-ext"><?= __('Logo Ext') ?></th>
+													<th class="please-change-type banner"><?= __('Banner') ?></th>
+													<th class="please-change-type banner-ext"><?= __('Banner Ext') ?></th>
 													<th class="string name"><?= __('Name') ?></th>
 													<th class="please-change-type name-slug"><?= __('Name Slug') ?></th>
 													<th class="please-change-type description"><?= __('Description') ?></th>
 													<th class="please-change-type description-slug"><?= __('Description Slug') ?></th>
 													<th class="please-change-type keywords"><?= __('Keywords') ?></th>
 													<th class="please-change-type keywords-slug"><?= __('Keywords Slug') ?></th>
+													<th class="please-change-type city-id"><?= __('City Id') ?></th>
+													<th class="please-change-type address"><?= __('Address') ?></th>
+													<th class="please-change-type house-number"><?= __('House Number') ?></th>
+													<th class="please-change-type phone"><?= __('Phone') ?></th>
+													<th class="please-change-type phone2"><?= __('Phone2') ?></th>
+													<th class="please-change-type web"><?= __('Web') ?></th>
+													<th class="please-change-type email"><?= __('Email') ?></th>
+													<th class="please-change-type google-map-url"><?= __('Google Map Url') ?></th>
 													<th class="please-change-type longitude"><?= __('Longitude') ?></th>
 													<th class="please-change-type latitude"><?= __('Latitude') ?></th>
 													<th class="please-change-type maximum-distance"><?= __('Maximum Distance') ?></th>
 													<th class="please-change-type date-from"><?= __('Date From') ?></th>
 													<th class="please-change-type date-to"><?= __('Date To') ?></th>
-													<th class="please-change-type logo"><?= __('Logo') ?></th>
-													<th class="please-change-type banner"><?= __('Banner') ?></th>
 <?php if($config['index_show_visible']){ ?>
 													<th class="boolean visible"><?= __('Visible') ?></th>
 <?php } ?>
@@ -371,19 +381,29 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 													<td class="please-change-type icon-id" value="<?= $companies->icon_id ?>"><?= h($companies->icon_id) ?></td>
 													<td class="please-change-type category-id" value="<?= $companies->category_id ?>"><?= h($companies->category_id) ?></td>
+													<td class="please-change-type logo" value="<?= $companies->logo ?>"><?= h($companies->logo) ?></td>
+													<td class="please-change-type logo-ext" value="<?= $companies->logo_ext ?>"><?= h($companies->logo_ext) ?></td>
+													<td class="please-change-type banner" value="<?= $companies->banner ?>"><?= h($companies->banner) ?></td>
+													<td class="please-change-type banner-ext" value="<?= $companies->banner_ext ?>"><?= h($companies->banner_ext) ?></td>
 													<td class="string name" value="<?= $companies->name ?>"><?= h($companies->name) ?></td>
 													<td class="please-change-type name-slug" value="<?= $companies->name_slug ?>"><?= h($companies->name_slug) ?></td>
 													<td class="please-change-type description" value="<?= $companies->description ?>"><?= h($companies->description) ?></td>
 													<td class="please-change-type description-slug" value="<?= $companies->description_slug ?>"><?= h($companies->description_slug) ?></td>
 													<td class="please-change-type keywords" value="<?= $companies->keywords ?>"><?= h($companies->keywords) ?></td>
 													<td class="please-change-type keywords-slug" value="<?= $companies->keywords_slug ?>"><?= h($companies->keywords_slug) ?></td>
+													<td class="please-change-type city-id" value="<?= $companies->city_id ?>"><?= h($companies->city_id) ?></td>
+													<td class="please-change-type address" value="<?= $companies->address ?>"><?= h($companies->address) ?></td>
+													<td class="please-change-type house-number" value="<?= $companies->house_number ?>"><?= h($companies->house_number) ?></td>
+													<td class="please-change-type phone" value="<?= $companies->phone ?>"><?= h($companies->phone) ?></td>
+													<td class="please-change-type phone2" value="<?= $companies->phone2 ?>"><?= h($companies->phone2) ?></td>
+													<td class="please-change-type web" value="<?= $companies->web ?>"><?= h($companies->web) ?></td>
+													<td class="please-change-type email" value="<?= $companies->email ?>"><?= h($companies->email) ?></td>
+													<td class="please-change-type google-map-url" value="<?= $companies->google_map_url ?>"><?= h($companies->google_map_url) ?></td>
 													<td class="please-change-type longitude" value="<?= $companies->longitude ?>"><?= h($companies->longitude) ?></td>
 													<td class="please-change-type latitude" value="<?= $companies->latitude ?>"><?= h($companies->latitude) ?></td>
 													<td class="please-change-type maximum-distance" value="<?= $companies->maximum_distance ?>"><?= h($companies->maximum_distance) ?></td>
 													<td class="please-change-type date-from" value="<?= $companies->date_from ?>"><?= h($companies->date_from) ?></td>
 													<td class="please-change-type date-to" value="<?= $companies->date_to ?>"><?= h($companies->date_to) ?></td>
-													<td class="please-change-type logo" value="<?= $companies->logo ?>"><?= h($companies->logo) ?></td>
-													<td class="please-change-type banner" value="<?= $companies->banner ?>"><?= h($companies->banner) ?></td>
 <?php if($config['index_show_visible']){ ?>
 													<td class="boolean visible" value="<?= $companies->visible ?>"><?= h($companies->visible) ?></td>
 <?php } ?>

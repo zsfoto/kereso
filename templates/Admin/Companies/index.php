@@ -54,7 +54,7 @@ $config = array_merge($global_config, $local_config);
 
 							<div class="card-body p-0 p-1">
 								
-								<table class="table table-responsive-xl table-hover table-striped mb-0 text-nowrap" style="">
+								<table class="table table-responsive-xl table-hover table-striped mb-0 text-wrap" style="">
 									<thead class="thead-info">
 										<tr>
 											<th class="row-id-anchor"></th>
@@ -64,7 +64,6 @@ $config = array_merge($global_config, $local_config);
 											<th class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string category-id"><?= $this->Paginator->sort('category_id') ?></th><!-- H.0. -->
 											<th class="string"><?= $this->Paginator->sort('logo') ?></th><!-- H.1. -->
-											<th class="string banner"><?= $this->Paginator->sort('banner') ?></th><!-- H.1. -->
 											<th class="string name">
 													<?= $this->Paginator->sort('name') ?><br>
 													<?= $this->Paginator->sort('keywords') ?>
@@ -122,8 +121,9 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 											<td class="string link icon-id" value="<?= $company->icon_id ?>"><?= $company->hasValue('icon') ? $this->Html->link($company->icon->name, ['controller' => 'Icons', 'action' => 'view', $company->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link category-id" value="<?= $company->category_id ?>"><?= $company->hasValue('category') ? $this->Html->link($company->category->name, ['controller' => 'Categories', 'action' => 'view', $company->category->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
-											<td class="string logo" value="<?= $company->logo ?>"><?= h($company->logo) ?></td>
-											<td class="string banner" value="<?= $company->banner ?>"><?= h($company->banner) ?></td>
+											<td class="string logo" value="<?= $company->logo ?>">
+												<?= $this->Html->image($logo_dir . "/" . $company->id . $logo_filename . $company->logo_ext, ['style' => 'width: 60px;']) ?>
+											</td>
 											<td class="string name" value="<?= $company->name ?>">
 												<span class="fw-bold"><?= h($company->name) ?></span><br>
 												<?= h($company->keywords) ?>
