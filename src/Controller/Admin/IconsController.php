@@ -243,10 +243,31 @@ class IconsController extends AppController
 					$icon->setErrors('field', __('Message'));
 				}
 			*/
+
+			$file_icon = $this->request->getData('file_icon');
+			//debug($file_icon);
+			//dd($file_banner);
+
+			if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
+				$filename = $file_icon->getClientFilename();
+				$ext = pathinfo($file_icon->getClientFilename(), PATHINFO_EXTENSION);
+				$icon->ext = $ext;
+				$icon->filename = $filename;	// Felesleges, de itt van
+			}
+			//dd($icon);
+
 			//dd($icon->getErrors());
             if (!$icon->hasErrors() && $this->Icons->save($icon)) {
-                //$this->Flash->success(__('The icon has been saved.'), ['plugin' => 'JeffAdmin5']);
-                $this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
+				if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
+					$icon_file_name = $icon->id . $this->iconFilename . $ext;
+					if(file_exists($this->targetPath . $icon_file_name)){
+						unlink($this->targetPath . $icon_file_name);
+					}					
+					$file_icon->moveTo($this->targetPath . $icon_file_name);
+					chmod($this->targetPath . $icon_file_name, 0664);
+				}				
+
+				$this->Flash->success(__('The save has been: OK'), ['plugin' => 'JeffAdmin5']);
 				$this->session->write('Layout.' . $this->controller . '.LastId', $icon->id);
 
                 //return $this->redirect(['action' => 'add']);
@@ -298,29 +319,21 @@ class IconsController extends AppController
 			*/
 
 			$file_icon = $this->request->getData('file_icon');
-			//debug($file_icon);
-			//dd($file_banner);
-
 			if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
-				$ext = pathinfo($file_icon->getClientFilename(), PATHINFO_EXTENSION);
-
 				$filename = $file_icon->getClientFilename();
-				$icon_file_name = $icon->id . $this->iconFilename . $ext;
-
+				$ext = pathinfo($file_icon->getClientFilename(), PATHINFO_EXTENSION);
 				$icon->ext = $ext;
 				$icon->filename = $filename;	// Felesleges, de itt van
 			}
-			//dd($icon);
 
 			//dd($icon->getErrors());
 			if (!$icon->hasErrors() && $this->Icons->save($icon)) {
 				if ($file_icon instanceof \Laminas\Diactoros\UploadedFile && $file_icon->getError() === UPLOAD_ERR_OK) {
+					$icon_file_name = $icon->id . $this->iconFilename . $ext;
 					if(file_exists($this->targetPath . $icon_file_name)){
 						unlink($this->targetPath . $icon_file_name);
-					}
-
+					}					
 					$file_icon->moveTo($this->targetPath . $icon_file_name);
-
 					chmod($this->targetPath . $icon_file_name, 0664);
 				}
 
@@ -361,8 +374,15 @@ class IconsController extends AppController
 
 		if ($this->Icons->delete($icon)) {
 			$this->session->delete('Layout.' . $this->controller . '.LastId');
-			//$this->Flash->success(__('The icon has been deleted.'), ['plugin' => 'JeffAdmin5']);
-			$this->Flash->success(__('The has been deleted.'), ['plugin' => 'JeffAdmin5']);
+
+			if(file_exists(WWW_ROOT . "img" . DS . "icons" . DS . $id . "_icon." . $icon->ext)){
+				unlink(WWW_ROOT . "img" . DS . "icons" . DS . $id . "_icon." . $icon->ext);
+				$this->Flash->success(__('Has been deleted.'), ['plugin' => 'JeffAdmin5']);
+			}else{
+				$this->Flash->warning(__('The icon file could not be deleted!'), ['plugin' => 'JeffAdmin5']);
+			}
+
+			
 		} else {
 			//$this->Flash->error(__('The icon could not be deleted. Please, try again.'), ['plugin' => 'JeffAdmin5']);
 			$this->Flash->error(__('The has been deleted. Please check the datas and try again.'), ['plugin' => 'JeffAdmin5']);

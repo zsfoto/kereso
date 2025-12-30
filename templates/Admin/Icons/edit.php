@@ -71,10 +71,18 @@ $this->assign('title', __('Edit') . ' ' . __('Icon'));
 											<!-- 2. STRING: filename: string  required -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="filename"><?= __('Filename') ?>:</label>
-												<div class="col-md-9">
+												<div class="col-md-5">
 													<?= $this->Form->control('file_icon', ['type' => 'file', 'placeholder' => __('Filename'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
+												<?php if(file_exists(WWW_ROOT . "img" . DS . $icon_dir . DS . $icon->id . $icon_filename . $icon->ext)){ ?>
+
+												<div class="col-md-3">
+													<?= $this->Html->image($icon_dir . "/" . $icon->id . $icon_filename . $icon->ext, ['style' => 'width: 50px;'])	 ?>
+
+												</div>
+												<?php } ?>
+												
 											</div>
 
 											<!-- 7. BOOLEAN: visible: boolean  required -->

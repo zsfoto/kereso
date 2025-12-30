@@ -49,7 +49,7 @@ $this->assign('title', __('Add') . ' ' . __('Icon'));
 
 							</div>
 
-							<?= $this->Form->create($icon, ['id' => 'main-form']) ?>
+							<?= $this->Form->create($icon, ['id' => 'main-form', 'type' => 'file']) ?>
 							
 								<?php //= $this->Form->control('_csrfToken', ['name' => '_csrfToken', 'type' => 'hidden', 'value' => $this->request->getAttribute('csrfToken')] ) ?>
 
@@ -72,7 +72,7 @@ $this->assign('title', __('Add') . ' ' . __('Icon'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="filename"><?= __('Filename') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('filename', ['label' => false, 'placeholder' => __('Filename'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('file_icon', ['type' => 'file', 'placeholder' => __('Filename'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -95,6 +95,7 @@ $this->assign('title', __('Add') . ' ' . __('Icon'));
 												</div>
 											</div>
 
+<?php /*
 											<!-- 4. DATETIME: last_used: datetime  -->
 											<div class="mb-3 row required">
 												<label class="pt-2 col-form-label col-md-2 pt-1 text-start text-md-end" for="last-used"><?= __('Last Used') ?>:</label>
@@ -110,6 +111,15 @@ $this->assign('title', __('Add') . ' ' . __('Icon'));
 													</div>
 												</div>
 											</div>
+*/ ?>
+										
+<?php /*											
+										<div class="tab-pane fade" id="tabPanelMore" role="tabpanel" aria-labelledby="tabMore" tabindex="0">
+											<h3>More content come here...</h3>
+
+										</div><!-- /.N.TAB -->
+*/ ?>
+
 
 										</div><!-- /.tabPanelMain -->
 										

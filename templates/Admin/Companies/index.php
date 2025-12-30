@@ -63,7 +63,7 @@ $config = array_merge($global_config, $local_config);
 <?php } ?>
 											<th class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string category-id"><?= $this->Paginator->sort('category_id') ?></th><!-- H.0. -->
-											<th class="string"><?= $this->Paginator->sort('logo') ?></th><!-- H.1. -->
+											<?php /* <th class="string"><?= $this->Paginator->sort('logo') ?></th><!-- H.1. --> */ ?>
 											<th class="string name">
 													<?= $this->Paginator->sort('name') ?><br>
 													<?= $this->Paginator->sort('keywords') ?>
@@ -110,6 +110,7 @@ $config = array_merge($global_config, $local_config);
 									<tbody>
 										<?php foreach ($companies as $company): ?>
 <?php
+	//dd($company);
 	//$classLastVisited = ' class="last-visited"';	// later...
 	//$classLastVisited = '';
 ?>
@@ -119,17 +120,22 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $company->id ?>"><?= h($company->id) ?><a name="<?= $company->id ?>"></a></td>
 <?php } ?>
-											<td class="string link icon-id" value="<?= $company->icon_id ?>"><?= $company->hasValue('icon') ? $this->Html->link($company->icon->name, ['controller' => 'Icons', 'action' => 'view', $company->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+											<!-- td class="string link icon-id" value="<?= $company->icon_id ?>"><?= $company->hasValue('icon') ? $this->Html->link($company->icon->name, ['controller' => 'Icons', 'action' => 'view', $company->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td -->
+											<td class="string logo" value="<?= $company->icon_id ?>">
+												<?= $this->Html->image("icons/" . $company->icon_id . '_icon.' . $company->icon->ext, ['style' => 'width: 40px;']) ?>
+											</td>
 											<td class="string link category-id" value="<?= $company->category_id ?>"><?= $company->hasValue('category') ? $this->Html->link($company->category->name, ['controller' => 'Categories', 'action' => 'view', $company->category->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
+											<?php /*
 											<td class="string logo" value="<?= $company->logo ?>">
 												<?= $this->Html->image($logo_dir . "/" . $company->id . $logo_filename . $company->logo_ext, ['style' => 'width: 60px;']) ?>
 											</td>
+											*/ ?>
 											<td class="string name" value="<?= $company->name ?>">
 												<span class="fw-bold"><?= h($company->name) ?></span><br>
 												<?= h($company->keywords) ?>
 											</td>
 											<td class="string link city-id" value="<?= $company->city_id ?>">
-												<?= $company->hasValue('city') ? $this->Html->link($company->city->name, ['controller' => 'Cities', 'action' => 'view', $company->city->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span><br>
+												<?= $company->hasValue('city') ? $this->Html->link($company->city->zip .' ' . $company->city->name, ['controller' => 'Cities', 'action' => 'view', $company->city->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span><br>
 												<span class="fw-normal"><?= $company->address ?> <?= $company->house_number ?>.</span>
 											</td>
 											<td class="string description" value="<?= $company->description ?>"><?= h($company->description) ?></td>

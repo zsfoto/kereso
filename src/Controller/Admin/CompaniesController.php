@@ -243,9 +243,9 @@ class CompaniesController extends AppController
 			//dd($logo);
 
 			$company->action = 'add';
-			//$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			//$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			//$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
+			$company->name_slug = Text::slug(strtolower($company->name), ' ');
+			$company->description_slug = Text::slug(strtolower($company->description), ' ');
+			$company->keywords_slug = Text::slug(strtolower($company->keywords), ' ');
 				
 			//dd($company);
 			/*
@@ -307,8 +307,8 @@ class CompaniesController extends AppController
 
 			$company->action = 'upd';
 			$company->name_slug = Text::slug(strtolower($company->name), ' ');
-			$company->description_slug = Text::slug(strtolower($company->name), ' ');
-			$company->keywords_slug = Text::slug(strtolower($company->name), ' ');
+			$company->description_slug = Text::slug(strtolower($company->description), ' ');
+			$company->keywords_slug = Text::slug(strtolower($company->keywords), ' ');
 			//dd($company);
 			/*
 				if(...){

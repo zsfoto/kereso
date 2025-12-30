@@ -77,6 +77,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 												</div>
 											</div>
 
+<?php /*
 											<!-- 2. STRING: logo: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="logo"><?= __('Logo') ?>:</label>
@@ -94,6 +95,7 @@ $this->assign('title', __('Add') . ' ' . __('Company'));
 
 												</div>
 											</div>
+*/ ?>
 
 											<!-- 2. STRING: name: string  required -->
 											<div class="mb-3 form-group row text required">

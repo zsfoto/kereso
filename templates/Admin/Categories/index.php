@@ -60,7 +60,7 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
-											<th colspan="2" class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
+											<th class="string id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
 											<th class="string keywords"><?= $this->Paginator->sort('keywords') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
@@ -104,10 +104,9 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $category->id ?>"><?= h($category->id) ?><a name="<?= $category->id ?>"></a></td>
 <?php } ?>
-											<?php // if($category->hasValue('icon')){ ?>
-												<td class="string link icon-id text-center" value="<?= $category->icon_id ?>"><?= $this->Html->link($this->Html->image('/img/icons/' . $category->icon->filename, ['class' => 'img-fluid', 'style' => 'width: 30px; height: 30px;']), ['controller' => 'Icons', 'action' => 'view', $category->icon->id], ['escape' => false]) ?></td>
-												<td class="string link icon-id" value="<?= $category->icon_id ?>"><?= $this->Html->link($category->icon->name, ['controller' => 'Icons', 'action' => 'view', $category->icon->id]) ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
-											<?php // } ?>
+											<td class="string logo" value="<?= $category->icon_id ?>">
+												<?= $this->Html->image("icons/" . $category->icon_id . '_icon.' . $category->icon->ext, ['style' => 'width: 40px;']) ?>
+											</td>
 											<td class="string name" value="<?= $category->name ?>"><?= h($category->name) ?></td>
 											<td class="string keywords" value="<?= $category->keywords ?>"><?= h($category->keywords) ?></td>
 <?php if($config['show_pos']){ ?>

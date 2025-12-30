@@ -66,7 +66,18 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="icon-id"><?= __('Icon Id') ?>:</label>
 												<div class="col-md-3">
-													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]);	?>
+													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]); ?>
+
+<?php /*
+													<?php // https://developer.snapappointments.com/bootstrap-select/examples/#selected-text-format ?>
+
+													<select class="selectpicker form-control select2" data-live-search="true" data-container="body" data-size="6">
+													<?php foreach($icons as $icon){ ?>
+														<option value="<?= $icon->id ?>" data-icon="</img/icons/<?= $icon->id ?>_icon.png"> <?= $icon->name ?></option>
+													<?php } ?>
+
+													</select>
+*/ ?>
 
 												</div>
 
@@ -77,6 +88,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 												</div>
 											</div>
 
+<?php /*
 											<!-- 2. STRING: logo: string  -->
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="logo"><?= __('Logo') ?>:</label>
@@ -94,6 +106,7 @@ $this->assign('title', __('Edit') . ' ' . __('Company'));
 
 												</div>
 											</div>
+*/ ?>
 
 											<!-- 2. STRING: name: string  required -->
 											<div class="mb-3 form-group row text required">

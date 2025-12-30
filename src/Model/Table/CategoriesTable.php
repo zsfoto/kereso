@@ -122,7 +122,6 @@ class CategoriesTable extends Table
 
         $validator
             ->nonNegativeInteger('company_count')
-            ->requirePresence('company_count', 'create')
             ->notEmptyString('company_count');
 
         return $validator;
