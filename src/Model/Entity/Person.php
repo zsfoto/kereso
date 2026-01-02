@@ -16,10 +16,12 @@ use Cake\Http\Exception\NotFoundException;
  * @property int|null $icon_id
  * @property int $company_id
  * @property string $name
- * @property string|null $name_slug
- * @property string|null $description
- * @property string|null $keywoords
- * @property string|null $keywoords_slug
+ * @property string $name_slug
+ * @property string $description
+ * @property string $description_slug
+ * @property string $keywords
+ * @property string $keywords_slug
+ * @property string $opening_time
  * @property string $phone
  * @property string|null $phone2
  * @property string|null $phone3
@@ -58,8 +60,10 @@ class Person extends Entity
         'name' => true,
         'name_slug' => true,
         'description' => true,
-        'keywoords' => true,
-        'keywoords_slug' => true,
+        'description_slug' => true,
+        'keywords' => true,
+        'keywords_slug' => true,
+        'opening_time' => true,
         'phone' => true,
         'phone2' => true,
         'phone3' => true,

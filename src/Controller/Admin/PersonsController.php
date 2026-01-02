@@ -35,7 +35,7 @@ class PersonsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($clearFilter = null)
+    public function index($company_id = null)
     {
 		//Configure::write('Theme.admin.config.header_buttons_in_action.index', array_merge(Configure::read('Theme.admin.config.header_buttons_in_action.index'), 
 		//	['back' => false, 'add' => true, 'edit' => false, 'save' => false, 'view' => false, 'delete' => false]
@@ -46,6 +46,9 @@ class PersonsController extends AppController
 		//$this->config['paginate_limit'] = 1000;
 		$queryParams = $this->request->getQuery();
 		$conditions 	 = [];		// Default conditions
+		if(isset($company_id)){
+			$conditions 	 = ['company_id' => $company_id];
+		}		
 		$page 		 	 = '1';
 		$sort 		 	 = 'id';
 		$direction 	 	 = 'asc';
@@ -53,7 +56,7 @@ class PersonsController extends AppController
 		$searchInSession = '';
 		$search 	 	 = '';		
 
-		if ($clearFilter == 'clear-filter'){
+		if ($company_id == 'clear-filter'){
 			if($this->session->check('Layout.' . $this->controller . '.search')){
 				$this->session->delete('Layout.' . $this->controller . '.search');
 			}
@@ -223,6 +226,11 @@ class PersonsController extends AppController
 			$data = $this->request->getData();
 			//debug($data);
             $person = $this->Persons->patchEntity($person, $data);
+			$person->name_slug = Text::slug($category->name, ' ');
+			$person->keywords_slug = Text::slug($category->keywords, ' ');
+			$person->description_slug = Text::slug($category->description, ' ');
+			$person->action = 'add';
+
 			//dd($person);
 			/*
 				if(...){
@@ -278,6 +286,10 @@ class PersonsController extends AppController
 			$data = $this->request->getData();
 			//debug($data);
 			$person = $this->Persons->patchEntity($person, $data);
+			$person->name_slug = Text::slug($person->name, ' ');
+			$person->keywords_slug = Text::slug($person->keywords, ' ');
+			$person->description_slug = Text::slug($person->description, ' ');
+			$person->action = 'upd';
 			//dd($person);
 			/*
 				if(...){

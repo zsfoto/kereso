@@ -29,8 +29,10 @@ class PersonsFixture extends TestFixture
                 'name' => 'Lorem ipsum dolor sit amet',
                 'name_slug' => 'Lorem ipsum dolor sit amet',
                 'description' => 'Lorem ipsum dolor sit amet',
-                'keywoords' => 'Lorem ipsum dolor sit amet',
-                'keywoords_slug' => 'Lorem ipsum dolor sit amet',
+                'description_slug' => 'Lorem ipsum dolor sit amet',
+                'keywords' => 'Lorem ipsum dolor sit amet',
+                'keywords_slug' => 'Lorem ipsum dolor sit amet',
+                'opening_time' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'phone' => 'Lorem ipsum dolor ',
                 'phone2' => 'Lorem ipsum dolor ',
                 'phone3' => 'Lorem ipsum dolor ',
@@ -46,8 +48,8 @@ class PersonsFixture extends TestFixture
                 'visible' => 1,
                 'pos' => 1,
                 'action' => 'Lorem ipsum dolor ',
-                'created' => '2025-12-25 10:19:15',
-                'modified' => '2025-12-25 10:19:15',
+                'created' => '2026-01-02 11:19:41',
+                'modified' => '2026-01-02 11:19:41',
             ],
         ];
         parent::init();

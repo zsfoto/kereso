@@ -39,6 +39,10 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 
 <?php /*
 										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="tabOpeningTime" data-bs-toggle="tab" data-bs-target="#tabPanelOpeningTime" type="button" role="tab" aria-controls="tabPanelOpeningTime" aria-selected="false"><?= __('Opening Time') ?></button>
+										</li>
+
+										<li class="nav-item" role="presentation">
 											<button class="nav-link" id="tabSecond" data-bs-toggle="tab" data-bs-target="#tabPanelSecond" type="button" role="tab" aria-controls="tabPanelSecond" aria-selected="false"><?= __('Memo') ?></button>
 										</li>
 										<li class="nav-item" role="presentation">
@@ -63,9 +67,9 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 
 											<!-- 1. SELECT: icon_id: integer  -->
 											<div class="mb-3 form-group row select required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="icon-id"><?= __('Icon Id') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="icon-id"><?= __('Icon Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => true]);	?>
+													<?= $this->Form->control('icon_id', ['options' => $icons, 'placeholder' => __('Icon Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -74,7 +78,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row select required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="company-id"><?= __('Company Id') ?>:</label>
 												<div class="col-md-4">
-													<?= $this->Form->control('company_id', ['options' => $companies, 'placeholder' => __('Company Id'), 'class' => 'form-control select2', 'data-live-search' => false, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
+													<?= $this->Form->control('company_id', ['options' => $companies, 'placeholder' => __('Company Id'), 'class' => 'form-control select2', 'data-live-search' => true, 'data-container' => 'body', 'data-size' => '6', 'empty' => false]);	?>
 
 												</div>
 											</div>
@@ -83,43 +87,25 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="name"><?= __('Name') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name', ['label' => __('Name'), 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
+													<?= $this->Form->control('name', ['label' => false, 'placeholder' => __('Name'), 'class' => 'form-control', 'empty' => false, 'autofocus' => true]); ?>
 
 												</div>
 											</div>
 
-											<!-- 2. STRING: name_slug: string  -->
+											<!-- 2. STRING: description: string  required -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="name-slug"><?= __('Name Slug') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="description"><?= __('Description') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('name_slug', ['label' => __('Name Slug'), 'placeholder' => __('Name Slug'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('description', ['label' => false, 'placeholder' => __('Description'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
-											<!-- 2. STRING: description: string  -->
+											<!-- 2. STRING: keywords: string  required -->
 											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description"><?= __('Description') ?>:</label>
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="keywords"><?= __('Keywords') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('description', ['label' => __('Description'), 'placeholder' => __('Description'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: keywoords: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywoords"><?= __('Keywoords') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('keywoords', ['label' => __('Keywoords'), 'placeholder' => __('Keywoords'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: keywoords_slug: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="keywoords-slug"><?= __('Keywoords Slug') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('keywoords_slug', ['label' => __('Keywoords Slug'), 'placeholder' => __('Keywoords Slug'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('keywords', ['label' => false, 'placeholder' => __('Keywords'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
@@ -128,7 +114,15 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="phone"><?= __('Phone') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('phone', ['label' => __('Phone'), 'placeholder' => __('Phone'), 'class' => 'form-control', 'empty' => false]); ?>
+													<?= $this->Form->control('phone', ['label' => false, 'placeholder' => __('Phone'), 'class' => 'form-control', 'empty' => false]); ?>
+
+												</div>
+											</div>
+
+											<div class="mb-3 form-group row text required">
+												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="description"><?= __('Opening hours') ?>:</label>
+												<div class="col-md-9">
+													<?= $this->Form->control('opening_time', ['id' => 'opening-time', 'label' => false, 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -137,7 +131,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="phone2"><?= __('Phone2') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('phone2', ['label' => __('Phone2'), 'placeholder' => __('Phone2'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('phone2', ['label' => false, 'placeholder' => __('Phone2'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -146,7 +140,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="phone3"><?= __('Phone3') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('phone3', ['label' => __('Phone3'), 'placeholder' => __('Phone3'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('phone3', ['label' => false, 'placeholder' => __('Phone3'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -155,7 +149,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="phone4"><?= __('Phone4') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('phone4', ['label' => __('Phone4'), 'placeholder' => __('Phone4'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('phone4', ['label' => false, 'placeholder' => __('Phone4'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -164,7 +158,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="phone5"><?= __('Phone5') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('phone5', ['label' => __('Phone5'), 'placeholder' => __('Phone5'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('phone5', ['label' => false, 'placeholder' => __('Phone5'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -173,7 +167,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="email"><?= __('Email') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('email', ['label' => __('Email'), 'placeholder' => __('Email'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('email', ['label' => false, 'placeholder' => __('Email'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -182,7 +176,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="email2"><?= __('Email2') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('email2', ['label' => __('Email2'), 'placeholder' => __('Email2'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('email2', ['label' => false, 'placeholder' => __('Email2'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -191,7 +185,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="web"><?= __('Web') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('web', ['label' => __('Web'), 'placeholder' => __('Web'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('web', ['label' => false, 'placeholder' => __('Web'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -200,7 +194,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="facebook"><?= __('Facebook') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('facebook', ['label' => __('Facebook'), 'placeholder' => __('Facebook'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('facebook', ['label' => false, 'placeholder' => __('Facebook'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -209,25 +203,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<div class="mb-3 form-group row text required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="youtube"><?= __('Youtube') ?>:</label>
 												<div class="col-md-9">
-													<?= $this->Form->control('youtube', ['label' => __('Youtube'), 'placeholder' => __('Youtube'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: logo: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="logo"><?= __('Logo') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('logo', ['label' => __('Logo'), 'placeholder' => __('Logo'), 'class' => 'form-control', 'empty' => true]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: banner: string  -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end" for="banner"><?= __('Banner') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('banner', ['label' => __('Banner'), 'placeholder' => __('Banner'), 'class' => 'form-control', 'empty' => true]); ?>
+													<?= $this->Form->control('youtube', ['label' => false, 'placeholder' => __('Youtube'), 'class' => 'form-control', 'empty' => true]); ?>
 
 												</div>
 											</div>
@@ -244,25 +220,46 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 											<!-- 3. INTEGER: pos: integer  required -->
 											<div class="mb-3 form-group row number required">
 												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="pos"><?= __('Pos') ?>:</label>
-												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4">
+												<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-3">
 													<?= $this->Form->control('pos', ['class' => 'form-control', 'placeholder' => __('Pos'), 'data-decimals' => '0', 'min' => '0', 'max' => '999999999999', 'step' => '1', 'empty' => false]); ?>
-
-												</div>
-											</div>
-
-											<!-- 2. STRING: action: string  required -->
-											<div class="mb-3 form-group row text required">
-												<label class="col-form-label col-md-2 pt-1 text-start text-md-end required" for="action"><?= __('Action') ?>:</label>
-												<div class="col-md-9">
-													<?= $this->Form->control('action', ['label' => __('Action'), 'placeholder' => __('Action'), 'class' => 'form-control', 'empty' => false]); ?>
 
 												</div>
 											</div>
 
 										</div><!-- /.tabPanelMain -->
 										
+<?php /*										
+										<!-- TabPanel: tabPanelOpeningTime -->
+										<!-- 10. TEXT: opening_time: text  required -->
+										<div class="tab-pane fade" id="tabPanelOpeningTime" role="tabpanel" aria-labelledby="tabOpeningTime" tabindex="0">
+											<div class="row mb-3">
+												<div class="col-sm-12">
+													<?= $this->Form->control('opening_time', ['id' => 'opening-time', 'label' => false, 'class' => 'summernote', 'empty' => false]); ?>
+
+												</div>
+											</div>
+										</div><!-- /.TabPanel: tabPanelOpeningTime -->
+
+										<div class="tab-pane fade" id="tabPanelMore" role="tabpanel" aria-labelledby="tabMore" tabindex="0">
+											<h3>More content come here...</h3>
+
+										</div><!-- /.N.TAB -->
+*/ ?>
+
+										</div><!-- /.tabPanelMain -->
 										
-<?php /*											
+<?php /*
+										<!-- TabPanel: tabPanelOpeningTime -->
+										<!-- 10. TEXT: opening_time: text  required -->
+										<div class="tab-pane fade" id="tabPanelOpeningTime" role="tabpanel" aria-labelledby="tabOpeningTime" tabindex="0">
+											<div class="row mb-3">
+												<div class="col-sm-12">
+													<?= $this->Form->control('opening_time', ['id' => 'opening-time', 'label' => false, 'class' => 'summernote', 'empty' => false]); ?>
+
+												</div>
+											</div>
+										</div><!-- /.TabPanel: tabPanelOpeningTime -->
+
 										<div class="tab-pane fade" id="tabPanelMore" role="tabpanel" aria-labelledby="tabMore" tabindex="0">
 											<h3>More content come here...</h3>
 
@@ -311,8 +308,8 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 			"jeffAdmin5./assets/js/popper",
 			"jeffAdmin5./assets/plugins/tempus-dominus-6.0.0/dist/js/tempus-dominus.min",	// Must be loaded the popper.js !!
 			"jeffAdmin5./assets/plugins/bootstrap-input-spinner-bs-5/src/bootstrap-input-spinner",
-			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
-			//"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/lang/summernote-hu-HU",
+			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/summernote-lite.min",
+			"jeffAdmin5./assets/plugins/summernote-0.8.18-dist/lang/summernote-hu-HU",
 			//'jeffAdmin5./assets/plugins/jReadMore-master/dist/read-more.min',
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/bootstrap-select.min",
 			"jeffAdmin5./assets/plugins/bootstrap-select-main/docs/docs/dist/js/i18n/defaults-hu_HU.min",
@@ -334,6 +331,7 @@ $this->assign('title', __('Add') . ' ' . __('Person'));
 
 	jeffAdminInitSelectPicker()
 	jeffAdminInitInputSpinner()
+	//jeffAdminInitSummerNote('opening-time', 400, '<?= __("Here you can write the note") ?>...') // Init SummerNote for opening_time.
 	jeffAdminInitICheck('icheckbox_flat-blue');
 
 	$(document).ready( function(){

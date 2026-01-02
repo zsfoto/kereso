@@ -62,8 +62,11 @@ $config = array_merge($global_config, $local_config);
 											<th class="string icon-id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
 											<th class="string company-id"><?= $this->Paginator->sort('company_id') ?></th><!-- H.0. -->
 											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
+											<th class="string name-slug"><?= $this->Paginator->sort('name_slug') ?></th><!-- H.1. -->
 											<th class="string description"><?= $this->Paginator->sort('description') ?></th><!-- H.1. -->
-											<th class="string keywoords"><?= $this->Paginator->sort('keywoords') ?></th><!-- H.1. -->
+											<th class="string description-slug"><?= $this->Paginator->sort('description_slug') ?></th><!-- H.1. -->
+											<th class="string keywords"><?= $this->Paginator->sort('keywords') ?></th><!-- H.1. -->
+											<th class="string keywords-slug"><?= $this->Paginator->sort('keywords_slug') ?></th><!-- H.1. -->
 											<th class="string phone"><?= $this->Paginator->sort('phone') ?></th><!-- H.1. -->
 											<th class="string phone2"><?= $this->Paginator->sort('phone2') ?></th><!-- H.1. -->
 											<th class="string phone3"><?= $this->Paginator->sort('phone3') ?></th><!-- H.1. -->
@@ -119,8 +122,11 @@ $config = array_merge($global_config, $local_config);
 											<td class="string link icon-id" value="<?= $person->icon_id ?>"><?= $person->hasValue('icon') ? $this->Html->link($person->icon->name, ['controller' => 'Icons', 'action' => 'view', $person->icon->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string link company-id" value="<?= $person->company_id ?>"><?= $person->hasValue('company') ? $this->Html->link($person->company->name, ['controller' => 'Companies', 'action' => 'view', $person->company->id]) : '' ?><span class="external-link-icon"><i class="fa fa-external-link" aria-hidden="true"></i></span></td>
 											<td class="string name" value="<?= $person->name ?>"><?= h($person->name) ?></td>
+											<td class="string name-slug" value="<?= $person->name_slug ?>"><?= h($person->name_slug) ?></td>
 											<td class="string description" value="<?= $person->description ?>"><?= h($person->description) ?></td>
-											<td class="string keywoords" value="<?= $person->keywoords ?>"><?= h($person->keywoords) ?></td>
+											<td class="string description-slug" value="<?= $person->description_slug ?>"><?= h($person->description_slug) ?></td>
+											<td class="string keywords" value="<?= $person->keywords ?>"><?= h($person->keywords) ?></td>
+											<td class="string keywords-slug" value="<?= $person->keywords_slug ?>"><?= h($person->keywords_slug) ?></td>
 											<td class="string phone" value="<?= $person->phone ?>"><?= h($person->phone) ?></td>
 											<td class="string phone2" value="<?= $person->phone2 ?>"><?= h($person->phone2) ?></td>
 											<td class="string phone3" value="<?= $person->phone3 ?>"><?= h($person->phone3) ?></td>

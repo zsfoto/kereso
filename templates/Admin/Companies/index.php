@@ -77,7 +77,7 @@ $config = array_merge($global_config, $local_config);
 											<th class="string latitude"><?= $this->Paginator->sort('latitude') ?></th><!-- H.1. -->
 											<th class="integer maximum-distance"><?= $this->Paginator->sort('maximum_distance') ?></th><!-- H.3. -->
 											<th class="date date-from"><?= $this->Paginator->sort('date_from') ?></th><!-- H.1. -->
-											<th class="date date-to"><?= $this->Paginator->sort('date_to') ?></th><!-- H.1. -->
+											<th class="actions"><?= __('Persons') ?></th>
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -142,8 +142,12 @@ $config = array_merge($global_config, $local_config);
 											<td class="string longitude" value="<?= $company->longitude ?>"><?= h($company->longitude) ?></td>
 											<td class="string latitude" value="<?= $company->latitude ?>"><?= h($company->latitude) ?></td>
 											<td class="integer maximum-distance" value="<?= $company->maximum_distance ?>"><?= $this->Number->format($company->maximum_distance, ['places' => 0, 'precision' => 0, 'before' => '', 'after' => '']) ?></td>
-											<td class="date date-from" value="<?= $company->date_from ?>"><?= h($company->date_from) ?></td>
-											<td class="date date-to" value="<?= $company->date_to ?>"><?= h($company->date_to) ?></td>
+											<td class="date date-from" value="<?= $company->date_from ?>">
+												<?= h($company->date_from) ?> - <?= h($company->date_to) ?>
+											</td>
+											<td class="string link persons text-center" value="<?= $company->pos ?>">
+												<?= $this->Html->link('<i class="fa fa-user"></i>', ['controller' => 'persons', 'action' => 'index', $company->id], ['escape' => false, 'role' => 'button', 'class' => 'btn btn-warning btn-sm', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => __('Persons'), 'data-original-title' => __('Persons')]) ?>
+											</td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $company->pos ?>"><?= h($company->pos) ?></td>
 <?php } ?>

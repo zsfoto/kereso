@@ -91,22 +91,37 @@ class PersonsTable extends Table
         $validator
             ->scalar('name_slug')
             ->maxLength('name_slug', 200)
-            ->allowEmptyString('name_slug');
+            ->requirePresence('name_slug', 'create')
+            ->notEmptyString('name_slug');
 
         $validator
             ->scalar('description')
             ->maxLength('description', 2000)
-            ->allowEmptyString('description');
+            ->requirePresence('description', 'create')
+            ->notEmptyString('description');
 
         $validator
-            ->scalar('keywoords')
-            ->maxLength('keywoords', 2000)
-            ->allowEmptyString('keywoords');
+            ->scalar('description_slug')
+            ->maxLength('description_slug', 2000)
+            ->requirePresence('description_slug', 'create')
+            ->notEmptyString('description_slug');
 
         $validator
-            ->scalar('keywoords_slug')
-            ->maxLength('keywoords_slug', 2000)
-            ->allowEmptyString('keywoords_slug');
+            ->scalar('keywords')
+            ->maxLength('keywords', 2000)
+            ->requirePresence('keywords', 'create')
+            ->notEmptyString('keywords');
+
+        $validator
+            ->scalar('keywords_slug')
+            ->maxLength('keywords_slug', 2000)
+            ->requirePresence('keywords_slug', 'create')
+            ->notEmptyString('keywords_slug');
+
+        $validator
+            ->scalar('opening_time')
+            ->requirePresence('opening_time', 'create')
+            ->notEmptyString('opening_time');
 
         $validator
             ->scalar('phone')
@@ -174,7 +189,6 @@ class PersonsTable extends Table
 
         $validator
             ->integer('pos')
-            ->requirePresence('pos', 'create')
             ->notEmptyString('pos');
 
         $validator

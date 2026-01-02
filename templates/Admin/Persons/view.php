@@ -44,6 +44,9 @@ $config = array_merge($global_config, $local_config);
 											<button class="nav-link active" id="tab-first" data-bs-toggle="tab" data-bs-target="#tabPanelMain" type="button" role="tab" aria-controls="tabPanelMain" aria-selected="true"><?= __('Basic data') ?></button>
 										</li>
 
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="tabOpeningTime" data-bs-toggle="tab" data-bs-target="#tabPanelOpeningTime" type="button" role="tab" aria-controls="tabPanelOpeningTime" aria-selected="false"><?= __('Opening Time') ?></button>
+										</li>
 
 <?php /*
 										<li class="nav-item" role="presentation">
@@ -104,16 +107,23 @@ $config = array_merge($global_config, $local_config);
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Keywoords') ?>:</label>
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Description Slug') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($person->keywoords) ?>
+													<?= h($person->description_slug) ?>
 
 												</div>
 											</div>
 											<div class="row"><!-- 2. -->
-												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Keywoords Slug') ?>:</label>
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Keywords') ?>:</label>
 												<div class="col-sm-10 p-1">
-													<?= h($person->keywoords_slug) ?>
+													<?= h($person->keywords) ?>
+
+												</div>
+											</div>
+											<div class="row"><!-- 2. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Keywords Slug') ?>:</label>
+												<div class="col-sm-10 p-1">
+													<?= h($person->keywords_slug) ?>
 
 												</div>
 											</div>
@@ -208,8 +218,32 @@ $config = array_merge($global_config, $local_config);
 
 												</div>
 											</div>
+<?php /*
+											<div class="row"><!-- 6. -->
+												<label class="col-sm-2 col-form-label p-1 text-start text-sm-end"><?= __('Opening Time') ?>:</label>
+												<div class="col-sm-10 p-1">
+													<?= $this->Text->autoParagraph(h($person->opening_time)) ?>
+
+												</div>
+											</div>
+*/ ?>
 
 										</div><!-- /.1.TAB -->
+										
+										<!-- TAB for: Opening Time text field -->
+										<div class="tab-pane fade" id="tabPanelOpeningTime" role="tabpanel" aria-labelledby="tabOpeningTime" tabindex="0">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="row">
+														<div id="readMoreOpening Time" class="col-sm-12 p-2 text read-more">
+															<?= $this->Text->autoParagraph($person->opening_time) ?>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- /.TAB for: Opening Time text field-->
 										
 
 <?php /*
