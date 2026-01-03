@@ -84,9 +84,8 @@ class CompaniesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('icon_id')
-            ->maxLength('icon_id', 64)
-            ->allowEmptyString('icon_id');
+            ->nonNegativeInteger('icon_id')
+            ->notEmptyString('icon_id');
 
         $validator
             ->nonNegativeInteger('category_id')

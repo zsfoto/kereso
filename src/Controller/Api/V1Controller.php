@@ -28,8 +28,9 @@ class V1Controller extends AppController
 
     public function categories()
     {
-		$categories = $this->Categories->find()->select(['Categories.id', 'Categories.icon_id', 'Categories.name', 'Categories.keywords']);
+		$categories = $this->Categories->find()->select(['Categories.id', 'Categories.icon_id', 'Categories.name', 'Categories.description']);
 		$searchTerm = $this->request->getQuery('q');
+        $conditions = ['company_count > ' => 0];
         if (!empty($searchTerm)) {
             $searchTerm = str_replace(' ', '%', $searchTerm);
             $searchTerm = str_replace('-', '%', $searchTerm);
@@ -40,7 +41,7 @@ class V1Controller extends AppController
             $searchTerm = str_replace('@', '%', $searchTerm);
             $searchTerm = str_replace('#', '%', $searchTerm);
             $searchTerm = str_replace('$', '%', $searchTerm);
-			$categories->where([
+			$conditions[] = [
                 'OR' => [
                     ['Categories.name LIKE' => '%' . $searchTerm . '%'],
                     ['Categories.name_slug LIKE' => '%' . $searchTerm . '%'],
@@ -49,9 +50,9 @@ class V1Controller extends AppController
                     ['Categories.description LIKE' => '%' . $searchTerm . '%'],
                     ['Categories.description_slug LIKE' => '%' . $searchTerm . '%'],
                 ]
-            ]);
-		}
-		$categories->all();
+            ];
+        }
+        $categories->where($conditions)->all();
 
 		$this->set([
 			'success' => true,
@@ -67,7 +68,14 @@ class V1Controller extends AppController
 
         $conditions = ['category_id' => $category_id];
 
-        $categories = $this->Companies->find()->select(['Companies.id', 'Companies.icon_id', 'Companies.name', 'Companies.description']);
+        $categories = $this->Companies->find()->contain(['Cities'])->select([
+            'Companies.id', 'Companies.icon_id', 'Companies.name', 'Companies.description', 
+            'Cities.name', 'Cities.zip',
+            'Companies.address', 'Companies.house_number',
+            'Companies.phone', 'Companies.phone2', 'Companies.web', 'Companies.email',
+            'Companies.google_map_url', 'Companies.longitude', 'Companies.latitude'
+        ]);
+        //dd($categories);
         $searchTerm = $this->request->getQuery('q');
 		if (!empty($searchTerm)) {
             $searchTerm = str_replace(' ', '%', $searchTerm);
@@ -91,9 +99,8 @@ class V1Controller extends AppController
             ];
 		}
 
-        $categories->where($conditions);
+        $categories->where($conditions)->all();
 
-		$categories->all();
 		$this->set([
 			'success' => true,
 			'count' => $categories->count(),	//count((array) $categories),
@@ -104,7 +111,11 @@ class V1Controller extends AppController
 
     public function persons($company_id = null)
     {
-		$categories = $this->Persons->find()->select(['Persons.id', 'Persons.icon_id', 'Persons.name', 'Persons.keywords']);
+		$categories = $this->Persons->find()->select([
+            'Persons.id', 'Persons.icon_id', 'Persons.name', 'Persons.description',
+            'Persons.opening_time', 'Persons.phone', 'Persons.phone2', 'Persons.Phone3', 'Persons.phone4', 'Persons.phone5',
+            'Persons.email', 'Persons.email2', 'Persons.web', 'Persons.facebook', 'Persons.youtube'
+        ]);
         $searchTerm = $this->request->getQuery('q');
         $conditions = ['company_id' => $company_id];
 		if (!empty($searchTerm)) {
