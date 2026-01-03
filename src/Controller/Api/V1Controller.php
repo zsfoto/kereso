@@ -28,9 +28,9 @@ class V1Controller extends AppController
 
     public function categories()
     {
-		$categories = $this->Categories->find()->select(['Categories.id', 'Categories.icon_id', 'Categories.name', 'Categories.description']);
+		$categories = $this->Categories->find()->contain(['Icons'])->select(['Categories.id', 'Categories.icon_id', 'Icons.ext', 'Categories.name', 'Categories.description']);
 		$searchTerm = $this->request->getQuery('q');
-        $conditions = ['company_count > ' => 0];
+        $conditions = ['Categories.company_count > ' => 0];
         if (!empty($searchTerm)) {
             $searchTerm = str_replace(' ', '%', $searchTerm);
             $searchTerm = str_replace('-', '%', $searchTerm);
@@ -54,10 +54,21 @@ class V1Controller extends AppController
         }
         $categories->where($conditions)->all();
 
+        $response = [];
+        foreach ($categories as $category){
+            $response[] = [
+                'id' => $category->id,
+                'icon_id' => $category->icon_id,
+                'icon_ext' => $category->icon->ext,
+                'name' => $category->name,
+                'description' => $category->description,                
+            ];
+        }
+
 		$this->set([
 			'success' => true,
-			'count' => $categories->count(),	//count((array) $categories),
-			'data' => $categories,
+			'count' => count($response),	//count((array) $categories),
+			'data' => $response,
 		]);
 		$this->viewBuilder()->setOption('serialize', ['success', 'count', 'data']);
     }
@@ -66,16 +77,16 @@ class V1Controller extends AppController
     {
         //dd($category_id);
 
-        $conditions = ['category_id' => $category_id];
+        $conditions = ['Companies.category_id' => $category_id];
 
-        $categories = $this->Companies->find()->contain(['Cities'])->select([
-            'Companies.id', 'Companies.icon_id', 'Companies.name', 'Companies.description', 
-            'Cities.name', 'Cities.zip',
+        $companies = $this->Companies->find()->contain(['Icons', 'Cities'])->select([
+            'Companies.id', 'Companies.icon_id', 'Icons.ext', 'Companies.name', 'Companies.description', 
+            'Cities.zip', 'Cities.name', 
             'Companies.address', 'Companies.house_number',
             'Companies.phone', 'Companies.phone2', 'Companies.web', 'Companies.email',
             'Companies.google_map_url', 'Companies.longitude', 'Companies.latitude'
         ]);
-        //dd($categories);
+        //dd($companies);
         $searchTerm = $this->request->getQuery('q');
 		if (!empty($searchTerm)) {
             $searchTerm = str_replace(' ', '%', $searchTerm);
@@ -99,12 +110,34 @@ class V1Controller extends AppController
             ];
 		}
 
-        $categories->where($conditions)->all();
+        $companies->where($conditions)->all();
+
+        $response = [];
+        foreach ($companies as $company){
+            $response[] = [
+                'id' => $company->id,
+                'icon_id' => $company->icon_id,
+                'icon_ext' => $company->icon->ext,
+                'name' => $company->name,
+                'description' => $company->description,
+                'city_zip' => $company->city->zip,
+                'city_name' => $company->city->name,
+                'address' => $company->address,
+                'house_number' => $company->house_number,
+                'phone' => $company->phone,
+                'phone2' => $company->phone2,
+                'web' => $company->web,
+                'email' => $company->email,
+                'google_map_url' => $company->google_map_url,
+                'longitude' => $company->longitude,
+                'latitude' => $company->latitude,
+            ];
+        }
 
 		$this->set([
 			'success' => true,
-			'count' => $categories->count(),	//count((array) $categories),
-			'data' => $categories,
+			'count' => count($response),
+			'data' => $response,
 		]);
 		$this->viewBuilder()->setOption('serialize', ['success', 'count', 'data']);
     }

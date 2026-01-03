@@ -105,10 +105,11 @@ $config = array_merge($global_config, $local_config);
 <?php if($config['show_id']){ ?>
 											<td class="number id" value="<?= $icon->id ?>"><?= h($icon->id) ?><a name="<?= $icon->id ?>"></a></td>
 <?php } ?>
-											<td class="string id" value="<?= $icon->id ?>">
-												<?= $this->Html->image($icon_dir . "/" . $icon->id . $icon_filename . $icon->ext, ['style' => 'width: 50px;'])	 ?>
+											<td class="string id text-center" value="<?= $icon->id ?>">
+												<?= $this->Html->image($icon_dir . "/" . $icon->id . $icon_filename . $icon->ext, ['style' => 'width: 30px;'])	 ?><br>
+												<?= $icon->ext ?>
 											</td>
-											<td class="string name" value="<?= $icon->name ?>"><?= h($icon->name) ?></td>
+											<td class="string name fw-bold" value="<?= $icon->name ?>"><?= h($icon->name) ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $icon->pos ?>"><?= h($icon->pos) ?></td>
 <?php } ?>

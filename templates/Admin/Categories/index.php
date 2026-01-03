@@ -61,8 +61,11 @@ $config = array_merge($global_config, $local_config);
 											<th class="number id"><?= $this->Paginator->sort('id') ?></th>
 <?php } ?>
 											<th class="string id"><?= $this->Paginator->sort('icon_id') ?></th><!-- H.0. -->
-											<th class="string name"><?= $this->Paginator->sort('name') ?></th><!-- H.1. -->
-											<th class="string keywords"><?= $this->Paginator->sort('keywords') ?></th><!-- H.1. -->
+											<th class="string name">
+												<?= $this->Paginator->sort('name') ?><br>
+												<?= $this->Paginator->sort('keywords') ?>
+											</th><!-- H.1. -->
+											<th class="string keywords text-center"><?= $this->Paginator->sort('company_count') ?></th><!-- H.1. -->
 <?php if($config['show_pos']){ ?>
 											<th class="number pos"><?= $this->Paginator->sort('pos') ?></th>
 <?php } ?>
@@ -107,8 +110,11 @@ $config = array_merge($global_config, $local_config);
 											<td class="string logo" value="<?= $category->icon_id ?>">
 												<?= $this->Html->image("icons/" . $category->icon_id . '_icon.' . $category->icon->ext, ['style' => 'width: 40px;']) ?>
 											</td>
-											<td class="string name" value="<?= $category->name ?>"><?= h($category->name) ?></td>
-											<td class="string keywords" value="<?= $category->keywords ?>"><?= h($category->keywords) ?></td>
+											<td class="string name" value="<?= $category->name ?>">
+												<b><?= h($category->name) ?></b><br>
+												<?= h($category->keywords) ?>
+											</td>
+											<td class="string keywords text-center" value="<?= $category->company_count ?>"><?= $category->company_count ?></td>
 <?php if($config['show_pos']){ ?>
 											<td class="number pos" value="<?= $category->pos ?>"><?= h($category->pos) ?></td>
 <?php } ?>
